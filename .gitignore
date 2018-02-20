@@ -1,5 +1,5 @@
-blocktradedesk/blocktradedesk/settings/dev.py
-blocktradedesk/blocktradedesk/settings/production.py
+btd_backend/blocktradedesk/blocktradedesk/settings/dev.py
+btd_backend/blocktradedesk/blocktradedesk/settings/production.py
 *.py[co]
 *.sw[po]
 *.egg*
