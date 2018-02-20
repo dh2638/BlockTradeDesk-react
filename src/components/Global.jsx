@@ -1,5 +1,5 @@
 var Config = {
-    domain: 'http://127.0.0.1:8000/en',
+    domain: process.env.APIURL,
     project_name: 'Blocktradedesk',
     api: {
         login: '/user/login/',
@@ -18,7 +18,7 @@ var Config = {
         stream_websocket: 'wss://ws.coinapi.io/v1/'
 
     },
-    coin_key:'03F038FE-7098-420C-905F-6ACFFF85EF11',
+    coin_key: process.env.COINAPI,
     coin_hostname: 'https://rest.coinapi.io'
 };
 module.exports = Config;

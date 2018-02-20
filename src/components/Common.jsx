@@ -91,14 +91,18 @@ function coinapi(URL) {
         method: 'GET',
         headers: {'Content-Type': 'application/json'},
     };
-    requestOptions['headers']['X-CoinAPI-Key'] = Config['coin_key']
+    requestOptions['headers']['X-CoinAPI-Key'] = Config['coin_key'];
     return fetch(Config['coin_hostname'] + URL, requestOptions)
         .then(response => {
-            let data = require('./pages/data');
-            return data;
-            // return response.json();
+            if (!response.ok) {
+                return response.json().then(data => {
+                        return Promise.reject(data['error']);
+                    }
+                )
+            }
+            return response.json();
         })
         .catch(function (ex) {
-            toastr.error(ex);
+            console.log(ex);
         });
 }

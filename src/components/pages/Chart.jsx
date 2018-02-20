@@ -5,7 +5,7 @@ let Config = require('../Global');
 let ws = new WebSocket(Config['api']['stream_websocket']);
 let moment = require('moment');
 let  Highcharts = require('highcharts/highstock');
-
+import DarkDotImage from './../../static/images/dark-dots.svg';
 
 export class Chart extends React.Component {
     constructor(props) {
@@ -74,7 +74,6 @@ export class Chart extends React.Component {
                 events: {
                     load: function () {
                         // set up the updating of the chart each second
-                        console.log('data coming');
                         let series = this.series[0];
                         setInterval(function () {
                             const {coins} = event.state;
@@ -210,7 +209,7 @@ export class Chart extends React.Component {
                         <div className="actionMain dropdownSlide">
 
                             <div className="dropClick actionBtn trans">
-                                <img src={require('./../../static/images/dark-dots.svg')} alt=""/>
+                                <img src={"../"+DarkDotImage} alt=""/>
                             </div>
                             <div className="dropdown_box">
                                 <ul>

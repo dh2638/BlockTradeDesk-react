@@ -1,7 +1,7 @@
 import React from 'react';
 import {history} from "./History";
 import {Link} from 'react-router-dom'
-
+import globalImage from './../static/images/globle.svg'
 export class Header extends React.Component {
     constructor(props) {
         super(props);
@@ -45,7 +45,7 @@ export class Header extends React.Component {
                             </div>
                         </div>
                         <div className="notificationMain dropdownSlide"><span className="dropClick">
-                        <img src={require('./../static/images/globle.svg')} alt=""/>
+                        <img src={globalImage} alt=""/>
                         <span className="notiDots"/></span>
                             <div className="dropdown_box">
                                 <ul>

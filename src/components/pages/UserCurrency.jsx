@@ -17,8 +17,6 @@ export class UserCurrency extends React.Component {
 
     componentWillMount() {
         this.userCurrencies();
-        console.log('currrr')
-
     }
 
 

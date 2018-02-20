@@ -3,6 +3,8 @@ import {apiMethods} from "../Common";
 
 let Config = require('../Global');
 let moment = require('moment');
+import DarkDotImage from './../../static/images/dark-dots.svg';
+
 
 
 export class UserTransactions extends React.Component {
@@ -54,7 +56,7 @@ export class UserTransactions extends React.Component {
                         <div className="dropClick paging actionBtn trans">
                                 <span data-days="7"
                                       onClick={() => this.transactionClick(7)}>Past 7 days</span>
-                            <img src={require('./../../static/images/dark-dots.svg')} alt=""/></div>
+                            <img src={"../"+DarkDotImage} alt=""/></div>
                         <div className="dropdown_box">
                             <ul>
                                 <li><a data-days="30" className="darkdots" onClick={() => this.transactionClick(30)}
@@ -67,7 +69,7 @@ export class UserTransactions extends React.Component {
                         <div className="dropClick paging actionBtn trans">
                                 <span data-days="30"
                                       onClick={() => this.transactionClick(30)}>Past 30 days</span>
-                            <img src={require('./../../static/images/dark-dots.svg')} alt=""/></div>
+                            <img src={"../"+DarkDotImage} alt=""/></div>
                         <div className="dropdown_box">
                             <ul>
                                 <li><a data-days="7" className="darkdots" onClick={() => this.transactionClick(7)}

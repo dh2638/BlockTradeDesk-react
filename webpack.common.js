@@ -1,14 +1,10 @@
-var webpack = require("webpack");
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
 module.exports = {
-    entry: './src/index.jsx',
-    output: {
-        path: path.resolve('dist'),
-        filename: 'bundle.js',
-        publicPath: '/',
+    entry: {
+        app: './src/index.jsx'
     },
     resolve: {
         extensions: ['.js', '.jsx']
@@ -29,7 +25,7 @@ module.exports = {
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
-                loader: 'file-loader',
+                loader: 'file-loader'
             },
             {
                 test: /\.(png|jpe?g|gif)$/,
@@ -37,16 +33,18 @@ module.exports = {
             }
         ],
     },
-
-    plugins: [new ExtractTextPlugin("bundle.css", {
-        allChunks: true
-    }), new HtmlWebpackPlugin({
-        template: './src/index.html',
-        filename: 'index.html',
-        inject: 'body'
-    })],
-    devServer: {
-        historyApiFallback: true
-    },
-    devtool: 'source-map',
+    plugins: [
+        new ExtractTextPlugin("bundle.css", {allChunks: true}),
+        new CleanWebpackPlugin(['dist']),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: 'index.html',
+            inject: 'body',
+            title: 'production'
+        })
+    ],
+    output: {
+        filename: 'bundle.js',
+        path: path.resolve('dist')
+    }
 };

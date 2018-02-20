@@ -12,6 +12,9 @@ import './static/css/style.css'
 import 'toastr/build/toastr.css';
 import './static/js/custom'
 
+if (process.env.NODE_ENV !== 'production') {
+    console.log('Looks like we are in development mode!');
+}
 class Index extends React.Component {
 
     constructor(props) {
@@ -32,7 +35,7 @@ class Index extends React.Component {
             <div className="wrapper">
                 <Header ref="header" LocalData={this.localData}/>
                 <div className="clearfix"/>
-                <Main setUserData={() => this.refs.header.afterLogin()} />
+                <Main setUserData={() => this.refs.header.afterLogin()}/>
                 <Footer/>
             </div>
         )
