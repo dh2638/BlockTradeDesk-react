@@ -1,5 +1,5 @@
-var Config = require('./Global');
 import toastr from 'toastr';
+let Config = require('./Global');
 
 export const apiMethods = {
     post,

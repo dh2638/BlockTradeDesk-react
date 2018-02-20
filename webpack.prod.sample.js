@@ -11,8 +11,8 @@ module.exports = merge(common, {
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),
-            'process.env.APIURL': '',
-            'process.env.COINAPI':''
+            'process.env.APIURL': JSON.stringify(''),
+            'process.env.COINAPI': JSON.stringify('')
         })
     ]
 });
