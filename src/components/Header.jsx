@@ -12,6 +12,10 @@ export class Header extends React.Component {
         this.setState(this.props.LocalData());
     }
 
+    afterLogout(){
+        this.setState(this.props.LocalData());
+    }
+
     getShortName() {
         const {first_name, last_name} = this.state;
         if (first_name && last_name)
@@ -39,8 +43,8 @@ export class Header extends React.Component {
                             </div>
                             <div className="dropdown_box">
                                 <ul>
-                                    <li><a onClick={() => { history.push('/profile/edit/') }} title="Edit Profile"> Edit Profile</a></li>
-                                    <li><a onClick={() => { history.push('/logout/') }} title="Logout"> Logout</a></li>
+                                    <li><a href="#/profile/edit/" title="Edit Profile"> Edit Profile</a></li>
+                                    <li><a href="#/logout/" title="Logout"> Logout</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -90,7 +94,7 @@ export class Header extends React.Component {
                             <a className="btn trans" href="#" title="MANAGE YOUR DIGITAL CURRENCY">MANAGE
                                 YOUR DIGITAL CURRENCY</a></div>
                         <div className="buttonMain pull-right">
-                            <a onClick={() => { history.push('/dashboard/') }} className="btn active trans" title="Dashboard"> Dashboard</a>
+                            <a href="#/dashboard/" className="btn active trans" title="Dashboard"> Dashboard</a>
                             <a href='#' className="btn trans" title="Settings"> Settings</a>
                         </div>
                     </div>

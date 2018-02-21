@@ -30,7 +30,8 @@ export class ForgetPassword extends React.Component {
                 data => {
                     if (data) {
                         localStorage.setItem('user_email', (this.state.email));
-                        history.push('/password-reset/verify/');
+                        // history.push('/password-reset/verify/');
+                        window.location.hash = '#/password-reset/verify/'
                     }
                 },
             );

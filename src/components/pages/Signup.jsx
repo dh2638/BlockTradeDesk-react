@@ -45,7 +45,8 @@ export class Signup extends React.Component {
                 data => {
                     if (data) {
                         localStorage.setItem('user_email', user.email);
-                        history.push('/signup/verify/');
+                        window.location.hash = "#/signup/verify/"
+                        // history.push('/signup/verify/');
                     }
                 },
             );

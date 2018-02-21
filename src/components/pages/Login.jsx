@@ -36,7 +36,8 @@ export class Login extends React.Component {
                         localStorage.setItem('user_first_name', data.first_name);
                         localStorage.setItem('user_last_name', data.last_name);
                         this.props.setLoginProp();
-                        history.push('/dashboard/');
+                        window.location.hash = "#/dashboard/"
+                        // history.push('/dashboard/');
                     }
                 },
             );

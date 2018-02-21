@@ -35,7 +35,8 @@ export class ForgetPasswordVerify extends React.Component {
             signup_active(email, code).then(
                 data => {
                     if (data) {
-                        history.push('/password-reset/set-password/');
+                        window.location.hash = '#/password-reset/set-password/'
+                        // history.push('/password-reset/set-password/');
                     }
                 },
             );

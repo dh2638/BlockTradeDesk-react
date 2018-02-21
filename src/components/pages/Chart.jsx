@@ -23,18 +23,18 @@ export class Chart extends React.Component {
     coins_dict() {
         return {
             current: {
-                BITSTAMP_SPOT_BTC_USD: 0,
-                BITSTAMP_SPOT_LTC_USD: 0,
-                BITSTAMP_SPOT_ETH_USD: 0,
-                BITSTAMP_SPOT_DASH_USD: 0,
-                BITSTAMP_SPOT_XRP_USD: 0,
+                KRAKEN_SPOT_BTC_USD: 0,
+                KRAKEN_SPOT_LTC_USD: 0,
+                KRAKEN_SPOT_ETH_USD: 0,
+                KRAKEN_SPOT_DASH_USD: 0,
+                KRAKEN_SPOT_XRP_USD: 0,
             },
             last: {
-                BITSTAMP_SPOT_BTC_USD_LAST: 0,
-                BITSTAMP_SPOT_LTC_USD_LAST: 0,
-                BITSTAMP_SPOT_ETH_USD_LAST: 0,
-                BITSTAMP_SPOT_DASH_USD_LAST: 0,
-                BITSTAMP_SPOT_XRP_USD_LAST: 0,
+                KRAKEN_SPOT_BTC_USD_LAST: 0,
+                KRAKEN_SPOT_LTC_USD_LAST: 0,
+                KRAKEN_SPOT_ETH_USD_LAST: 0,
+                KRAKEN_SPOT_DASH_USD_LAST: 0,
+                KRAKEN_SPOT_XRP_USD_LAST: 0,
             },
             last_date: moment().subtract(30, 'd').utc().format()
         };
@@ -123,7 +123,7 @@ export class Chart extends React.Component {
         if (currencies && Object.keys(chart_data).length === currencies.length && !is_draw) {
             currencies.map(function (item, index) {
                 if (chart_data[item.name] && document.getElementById(item.name + '-chart')) {
-                    status = event.drawGraph(item.name, chart_data[item.name], "BITSTAMP_SPOT_" + item.code + "_USD");
+                    status = event.drawGraph(item.name, chart_data[item.name], "KRAKEN_SPOT_" + item.code + "_USD");
                 }
             });
             if (status) {
@@ -162,11 +162,8 @@ export class Chart extends React.Component {
                         getcurrencyData(item.code).then(
                             coinrate => {
                                 if (coinrate) {
-                                    if (!reverse) {
-                                        coinrate = coinrate.reverse();
-                                        reverse = true
-                                    }
-                                    coinrate.map(function (obj, counter) {
+                                    coinrate = coinrate.reverse();
+                                    coinrate.map(function (obj) {
                                         if (!(item.name in chart_data)) {
                                             chart_data[item.name] = []
                                         }
@@ -177,11 +174,11 @@ export class Chart extends React.Component {
                                             ...prevState.coins,
                                             current: {
                                                 ...prevState.coins.current,
-                                                ["BITSTAMP_SPOT_" + item.code + "_USD"]: coinrate[coinrate.length - 1]['price_open'],
+                                                ["KRAKEN_SPOT_" + item.code + "_USD"]: coinrate[coinrate.length - 1]['price_open'],
                                             },
                                             last: {
                                                 ...prevState.coins.last,
-                                                ["BITSTAMP_SPOT_" + item.code + "_USD_LAST"]: coinrate[0]['price_open']
+                                                ["KRAKEN_SPOT_" + item.code + "_USD_LAST"]: coinrate[0]['price_open']
                                             }
                                         }
                                     }));
@@ -219,7 +216,7 @@ export class Chart extends React.Component {
                                                 <a className="currency-dropdown darkdots"
                                                    data-type={item.name.toLowerCase()}
                                                    data-code={item.name.toUpperCase()} data-name={item.name}
-                                                   data-value={coins['current']['BITSTAMP_SPOT_' + item.code + '_USD']}
+                                                   data-value={coins['current']['KRAKEN_SPOT_' + item.code + '_USD']}
                                                    title="Test">{item.name}</a></li>)
                                         }
                                     })}
@@ -233,7 +230,7 @@ export class Chart extends React.Component {
                                 if (index < 3) {
                                     return (<li key={index} className={index === 0 ? 'coinTabActive' : ''}
                                                 data-coin={item.name.toLowerCase()}>
-                                            <span>{item.name}</span> $ {coins['current']['BITSTAMP_SPOT_' + item.code + '_USD']}
+                                            <span>{item.name}</span> $ {coins['current']['KRAKEN_SPOT_' + item.code + '_USD']}
                                         </li>
                                     )
                                 }
@@ -243,18 +240,18 @@ export class Chart extends React.Component {
                 </div>
                 {currencies && currencies.map(function (item, index) {
                     let amount = 0
-                    if(coins['last']['BITSTAMP_SPOT_' + item.code + '_USD_LAST']) {
-                        amount = 100 - (coins['current']['BITSTAMP_SPOT_' + item.code + '_USD'] / (coins['last']['BITSTAMP_SPOT_' + item.code + '_USD_LAST'])) * 100;
+                    if(coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST']) {
+                        amount = 100 - (coins['current']['KRAKEN_SPOT_' + item.code + '_USD'] / (coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'])) * 100;
                     }
                      return (<div id={item.name.toLowerCase()} key={index} data-coin={item.name.toLowerCase()}
                                  className={'boxInner coinTabBody' + (index === 0 ? ' coinTabActive' : '')}>
                         <div className="priceBoxes">
                             <div className="priceBox">
-                                <strong>$ {coins['current']['BITSTAMP_SPOT_' + item.code + '_USD']}</strong>
+                                <strong>$ {coins['current']['KRAKEN_SPOT_' + item.code + '_USD']}</strong>
                                 <span>{item.name.toUpperCase()} PRICE</span></div>
                             <div className="priceBox downArrow">
-                                <strong>{coins['last']['BITSTAMP_SPOT_' + item.code + '_USD_LAST'] ?
-                                    "$ "+coins['last']['BITSTAMP_SPOT_' + item.code + '_USD_LAST']: "Not available"}</strong>
+                                <strong>{coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'] ?
+                                    "$ "+coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST']: "Not available"}</strong>
                                 <span>since last month (USD)</span>
                             </div>
                             <div className={'priceBox' + (amount > 0 ? ' downArrow' : ' upArrow')}>
@@ -296,7 +293,7 @@ function currentCoinRate(code, time) {
 }
 
 function getcurrencyData(code) {
-    let API_URL = '/v1/ohlcv/BITSTAMP_SPOT_'+code+'_USD/latest?period_id=1HRS&limit=720';
+    let API_URL = '/v1/ohlcv/KRAKEN_SPOT_'+code+'_USD/latest?period_id=1HRS&limit=720';
     return apiMethods.coinapi(API_URL)
 }
 

@@ -36,7 +36,8 @@ export class ForgetPasswordSetPassword extends React.Component {
             forget_set_password(email, password, confirm_password).then(
                 data => {
                     if (data) {
-                        history.push('/');
+                        // history.push('/');
+                        window.location.hash = "#/"
                     }
                 },
             );

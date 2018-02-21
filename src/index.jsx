@@ -1,16 +1,16 @@
-import React from 'react';
-import {render} from 'react-dom';
-import {Footer} from './components/Footer'
-import {Header} from './components/Header'
-import {Main} from './components/Main'
+import React from "react";
+import {render} from "react-dom";
+import {Footer} from "./components/Footer";
+import {Header} from "./components/Header";
+import {Main} from "./components/Main";
 
 
-import './static/css/bootstrap.min.css'
-import './static/css/font-awesome.min.css'
-import './static/css/responsive.css'
-import './static/css/style.css'
-import 'toastr/build/toastr.css';
-import './static/js/custom'
+import "./static/css/bootstrap.min.css";
+import "./static/css/font-awesome.min.css";
+import "./static/css/responsive.css";
+import "./static/css/style.css";
+import "toastr/build/toastr.css";
+import "./static/js/custom";
 
 if (process.env.NODE_ENV !== 'production') {
     console.log('Looks like we are in development mode!');
@@ -35,7 +35,8 @@ class Index extends React.Component {
             <div className="wrapper">
                 <Header ref="header" LocalData={this.localData}/>
                 <div className="clearfix"/>
-                <Main setUserData={() => this.refs.header.afterLogin()}/>
+                <Main setUserData={() => this.refs.header.afterLogin()}
+                      delUserData={() => this.refs.header.afterLogout()}/>
                 <Footer/>
             </div>
         )

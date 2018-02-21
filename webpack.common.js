@@ -34,7 +34,7 @@ module.exports = {
         ],
     },
     plugins: [
-        new ExtractTextPlugin("bundle.css", {allChunks: true}),
+        new ExtractTextPlugin("bundle.css", {allChunks: true, publicPath: './'}),
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             template: './src/index.html',

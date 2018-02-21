@@ -33,7 +33,8 @@ export class SignupActive extends React.Component {
             signup_active(email, code).then(
                 data => {
                     if (data) {
-                        history.push('/');
+                        // history.push('/');
+                        window.location.hash = '#/'
                     }
                 },
             );

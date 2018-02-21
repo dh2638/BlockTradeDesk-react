@@ -1,5 +1,4 @@
-import React from 'react';
-import {history} from "../History";
+import React from "react";
 
 
 export class Logout extends React.Component {
@@ -8,8 +7,9 @@ export class Logout extends React.Component {
         localStorage.removeItem('user_token');
         localStorage.removeItem('user_first_name');
         localStorage.removeItem('user_last_name');
-        history.push('/');
-        window.location.reload();
+        // history.push('#/');
+        this.props.delLoginProp();
+        window.location.hash = "#/"
     }
 
     render() {

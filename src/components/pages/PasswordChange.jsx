@@ -34,7 +34,8 @@ export class PasswordChange extends React.Component {
             change_password(old_password, password).then(
                 data => {
                     if (data) {
-                        history.push('/dashboard/');
+                        window.location.hash = "#/dashboard/"
+                        // history.push('/dashboard/');
                     }
                 },
             );

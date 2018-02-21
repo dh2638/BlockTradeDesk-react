@@ -42,7 +42,6 @@ function get(URL, requestData, Auth) {
     const requestOptions = {
         method: 'GET',
         headers: {'Content-Type': 'application/json'},
-        body: requestData
     };
     if (Auth) {
         requestOptions['headers']['Authorization'] = 'Token ' + localStorage.getItem('user_token')

@@ -45,9 +45,10 @@ export class ProfileEdit extends React.Component {
                     if (data) {
                         localStorage.setItem('user_first_name', first_name);
                         localStorage.setItem('user_last_name', last_name);
+                        this.props.setLoginProp();
                         setTimeout(function () {
-                            history.push('/dashboard/');
-                            window.location.reload(1);
+                            window.location.hash = '#/dashboard/'
+                            // history.push('/dashboard/');
                         }, 500);
                     }
                 },
@@ -79,7 +80,7 @@ export class ProfileEdit extends React.Component {
                                        value="Update Profile"/>
                             </div>
                             <div className="forgotText">Change Password?
-                                <a className="trans" onClick={() => { history.push('/password-change/') }}> Click Here!</a>
+                                <a href="#/password-change/" className="trans"> Click Here!</a>
                             </div>
                         </form>
                     </div>

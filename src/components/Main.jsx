@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router} from "react-router-dom";
+import {HashRouter as Router} from "react-router-dom";
 
 import {history} from "./History";
 
@@ -22,7 +22,7 @@ export class Main extends React.Component {
 
     render() {
         return (
-            <Router history={history}>
+            <Router>
                 <div>
                     <PublicRoute exact path="/"  component={() => (<Login setLoginProp={this.props.setUserData} />)} />
                     <PublicRoute exact path="/signup/" component={Signup}/>
@@ -32,8 +32,8 @@ export class Main extends React.Component {
                     <PublicRoute exact path="/password-reset/set-password/" component={ForgetPasswordSetPassword}/>
 
                     <PrivateRoute exact path="/dashboard/" component={Dashboard}/>
-                    <PrivateRoute exact path="/logout/" component={Logout}/>
-                    <PrivateRoute exact path="/profile/edit/" component={ProfileEdit}/>
+                    <PrivateRoute exact path="/logout/" component={() => (<Logout delLoginProp={this.props.delUserData}/>)} />
+                    <PrivateRoute exact path="/profile/edit/" component={() => (<ProfileEdit setLoginProp={this.props.setUserData} />)}/>
                     <PrivateRoute exact path="/password-change/" component={PasswordChange}/>
                     {/*<Route component={NotFound}/>*/}
                 </div>
