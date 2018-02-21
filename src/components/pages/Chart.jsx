@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 import {apiMethods} from "../Common";
+import DarkDotImage from "./../../static/images/dark-dots.svg";
 
 let Config = require('../Global');
 let ws = new WebSocket(Config['api']['stream_websocket']);
 let moment = require('moment');
-let  Highcharts = require('highcharts/highstock');
-import DarkDotImage from './../../static/images/dark-dots.svg';
+let Highcharts = require('highcharts/highstock');
 
 export class Chart extends React.Component {
     constructor(props) {
@@ -183,7 +183,7 @@ export class Chart extends React.Component {
                                         }
                                     }));
                                 }
-                                else{
+                                else {
                                     chart_data[item.name] = []
                                 }
                             }
@@ -193,7 +193,12 @@ export class Chart extends React.Component {
                     this.setState({currencies: currency_type});
                 }
             }
-        )
+        ).catch(function (ex) {
+            localStorage.removeItem('user_token');
+            localStorage.removeItem('user_first_name');
+            localStorage.removeItem('user_last_name');
+            window.location.hash = "#/"
+        });
     }
 
 
@@ -206,7 +211,7 @@ export class Chart extends React.Component {
                         <div className="actionMain dropdownSlide">
 
                             <div className="dropClick actionBtn trans">
-                                <img src={"../"+DarkDotImage} alt=""/>
+                                <img src={"../" + DarkDotImage} alt=""/>
                             </div>
                             <div className="dropdown_box">
                                 <ul>
@@ -230,7 +235,8 @@ export class Chart extends React.Component {
                                 if (index < 3) {
                                     return (<li key={index} className={index === 0 ? 'coinTabActive' : ''}
                                                 data-coin={item.name.toLowerCase()}>
-                                            <span>{item.name}</span> $ {coins['current']['KRAKEN_SPOT_' + item.code + '_USD']}
+                                            <span>{item.name}</span>
+                                            $ {coins['current']['KRAKEN_SPOT_' + item.code + '_USD']}
                                         </li>
                                     )
                                 }
@@ -240,10 +246,10 @@ export class Chart extends React.Component {
                 </div>
                 {currencies && currencies.map(function (item, index) {
                     let amount = 0
-                    if(coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST']) {
+                    if (coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST']) {
                         amount = 100 - (coins['current']['KRAKEN_SPOT_' + item.code + '_USD'] / (coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'])) * 100;
                     }
-                     return (<div id={item.name.toLowerCase()} key={index} data-coin={item.name.toLowerCase()}
+                    return (<div id={item.name.toLowerCase()} key={index} data-coin={item.name.toLowerCase()}
                                  className={'boxInner coinTabBody' + (index === 0 ? ' coinTabActive' : '')}>
                         <div className="priceBoxes">
                             <div className="priceBox">
@@ -251,7 +257,7 @@ export class Chart extends React.Component {
                                 <span>{item.name.toUpperCase()} PRICE</span></div>
                             <div className="priceBox downArrow">
                                 <strong>{coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'] ?
-                                    "$ "+coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST']: "Not available"}</strong>
+                                    "$ " + coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'] : "Not available"}</strong>
                                 <span>since last month (USD)</span>
                             </div>
                             <div className={'priceBox' + (amount > 0 ? ' downArrow' : ' upArrow')}>
@@ -293,7 +299,7 @@ function currentCoinRate(code, time) {
 }
 
 function getcurrencyData(code) {
-    let API_URL = '/v1/ohlcv/KRAKEN_SPOT_'+code+'_USD/latest?period_id=1HRS&limit=720';
+    let API_URL = '/v1/ohlcv/KRAKEN_SPOT_' + code + '_USD/latest?period_id=1HRS&limit=720';
     return apiMethods.coinapi(API_URL)
 }
 

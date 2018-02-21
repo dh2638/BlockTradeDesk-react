@@ -1,18 +1,16 @@
-import React from 'react';
-import {history} from "./History";
-import {Link} from 'react-router-dom'
-import globalImage from './../static/images/globle.svg'
+import React from "react";
+import globalImage from "./../static/images/globle.svg";
 export class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.props.LocalData();
     }
 
-    afterLogin(){
+    afterLogin() {
         this.setState(this.props.LocalData());
     }
 
-    afterLogout(){
+    afterLogout() {
         this.setState(this.props.LocalData());
     }
 
@@ -20,6 +18,10 @@ export class Header extends React.Component {
         const {first_name, last_name} = this.state;
         if (first_name && last_name)
             return first_name.charAt(0) + last_name.charAt(0)
+    }
+
+    componentWillMount() {
+        this.setState(this.props.LocalData())
     }
 
     render() {

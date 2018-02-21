@@ -10,7 +10,7 @@ export class Dashboard extends React.Component {
         return (
             <section className="midPart">
                 <div className="container">
-                    <Chart/>
+                    <Chart />
                     <UserCurrency ref="amount"/>
                     <UserTransactions setAmount={() => this.refs.amount.totalAmount()} />
                 </div>
