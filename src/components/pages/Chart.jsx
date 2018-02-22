@@ -53,6 +53,10 @@ export class Chart extends React.Component {
 
     }
 
+    getCurrencyAmount(code){
+        const {coins} = this.state
+        return coins['current']['KRAKEN_SPOT_'+code+'_USD']
+    }
     drawGraph(item, chart_data = [], key) {
         let event = this;
 

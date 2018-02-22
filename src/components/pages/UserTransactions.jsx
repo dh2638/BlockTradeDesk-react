@@ -99,7 +99,7 @@ export class UserTransactions extends React.Component {
                                                     className="simbole">{item.currency.code}</span></td>
                                                 <td width="350px" valign="middle"><p>{item.currency.name}</p></td>
                                                 <td valign="middle"><span className="table_price">${item.price}</span><span
-                                                    className="wasPrice">-${item.amount}</span></td>
+                                                    className="wasPrice"> {item.amount}</span></td>
                                             </tr>)
                                         }
                                     }
@@ -129,7 +129,7 @@ export class UserTransactions extends React.Component {
                                                     className="simbole">{item.currency.code}</span></td>
                                                 <td width="350px" valign="middle"><p>{item.currency.name}</p></td>
                                                 <td valign="middle"><span className="table_price">${item.price}</span><span
-                                                    className="wasPrice">-${item.amount}</span></td>
+                                                    className="wasPrice">{item.amount}</span></td>
                                             </tr>)
                                         }
                                     }

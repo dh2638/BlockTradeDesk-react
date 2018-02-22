@@ -19,15 +19,20 @@ export class UserCurrency extends React.Component {
         this.userCurrencies();
     }
 
+    getCurrenctRate(code){
+        return this.props.getCurrencyValue(code);
+    }
 
     userCurrencies(start_date, end_date) {
+        const event = this;
         getUserCurrencies(start_date, end_date).then(
             data => {
                 if (data) {
                     this.setState({user_currency: data});
                     let total = 0;
                     data['results'].map(function (item) {
-                        total += item.amount * item.currency.current_rate
+                        let current_rate = event.getCurrenctRate(item.currency.code);
+                        total += item.amount * current_rate
                     });
                     this.setState({user_total_amount: total})
                 }
@@ -49,6 +54,7 @@ export class UserCurrency extends React.Component {
 
     render() {
         const {user_currency} = this.state;
+        const event= this
         if (user_currency) {
             return (
                 <div className="whiteBox secBox">
@@ -84,10 +90,11 @@ export class UserCurrency extends React.Component {
                     </div>
                     <ul className="tableRow">
                         {user_currency['results'].map(function (item, index) {
+                            let current_rate = event.getCurrenctRate(item.currency.code);
                             return (<li key={index}>
                                 <div className="col-1 coinName">{item.currency.name}</div>
                                 <div className="col-2"><span
-                                    className="priceTag">$ {item.currency.current_rate}</span>{item.amount}
+                                    className="priceTag">$ {current_rate}</span>{item.amount}
                                 </div>
                             </li>)
                         })}
