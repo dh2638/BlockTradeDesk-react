@@ -67,8 +67,7 @@ export class Header extends React.Component {
                     <div className="pull-right headRight">
                         <ul className="topNav">
                             <li className="dropdownSlide">
-                        <span className="dropClick">Our Products
-                             <i className="fa fa-chevron-down" aria-hidden="true"/></span>
+                        <span className="dropClick">Our Products <i className="fa fa-chevron-down" aria-hidden="true"/></span>
                                 <ul className="dropdown_box">
                                     <li key="1"><a href="#" title="Product 01">Product 01</a></li>
                                     <li key="2"><a href="#" title="Product 02">Product 02</a></li>
@@ -76,8 +75,7 @@ export class Header extends React.Component {
                                 </ul>
                             </li>
                             <li className="dropdownSlide">
-                        <span className="dropClick">Help
-                            <i className="fa fa-chevron-down" aria-hidden="true"/></span>
+                        <span className="dropClick">Help <i className="fa fa-chevron-down" aria-hidden="true"/></span>
                                 <ul className="dropdown_box">
                                     <li key="1"><a href="#" title="Test 01">Test 01</a></li>
                                     <li key="2"><a href="#" title="Test 02">Test 02</a></li>

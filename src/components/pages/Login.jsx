@@ -68,7 +68,7 @@ export class Login extends React.Component {
                             <div className="inputMain">
                                 <input id="loginform-btn" className="trans submiteBtn" type="submit" value="sign in"/>
                             </div>
-                            <div className="forgotText">Forgot email/email or password?
+                            <div className="forgotText">Forgot password?
                                 <Link to='/password-reset/' className="trans"> Click Here!</Link>
                             </div>
                         </form>
