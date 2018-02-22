@@ -25,14 +25,14 @@ export class UserCurrency extends React.Component {
 
     userCurrencies(start_date, end_date) {
         const event = this;
+        let total = 0;
         getUserCurrencies(start_date, end_date).then(
             data => {
                 if (data) {
                     this.setState({user_currency: data});
-                    let total = 0;
                     data['results'].map(function (item) {
                         let current_rate = event.getCurrenctRate(item.currency.code);
-                        total += item.amount * current_rate
+                        total += item.amount * current_rate;
                     });
                     this.setState({user_total_amount: total})
                 }
@@ -53,8 +53,8 @@ export class UserCurrency extends React.Component {
     }
 
     render() {
-        const {user_currency} = this.state;
-        const event= this
+        const {user_currency, user_total_amount} = this.state;
+        const event= this;
         if (user_currency) {
             return (
                 <div className="whiteBox secBox">
@@ -86,7 +86,7 @@ export class UserCurrency extends React.Component {
                     {/*}*/}
                     <div className="secTitleMain">
                         <div className="secTitle">Your Portfolio</div>
-                        <div className="subTitle">Total Value: <strong>$ {this.totalAmount()}</strong></div>
+                        <div className="subTitle">Total Value: <strong>$ {user_total_amount.toLocaleString('en')}</strong></div>
                     </div>
                     <ul className="tableRow">
                         {user_currency['results'].map(function (item, index) {
@@ -94,7 +94,7 @@ export class UserCurrency extends React.Component {
                             return (<li key={index}>
                                 <div className="col-1 coinName">{item.currency.name}</div>
                                 <div className="col-2"><span
-                                    className="priceTag">$ {current_rate}</span>{item.amount}
+                                    className="priceTag">$ {current_rate.toLocaleString('en')}</span>{item.amount}
                                 </div>
                             </li>)
                         })}
