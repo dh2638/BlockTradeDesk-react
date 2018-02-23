@@ -6,11 +6,7 @@ export class Header extends React.Component {
         this.state = this.props.LocalData();
     }
 
-    afterLogin() {
-        this.setState(this.props.LocalData());
-    }
-
-    afterLogout() {
+    updateUserData() {
         this.setState(this.props.LocalData());
     }
 

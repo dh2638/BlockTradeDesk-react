@@ -35,8 +35,7 @@ class Index extends React.Component {
             <div className="wrapper">
                 <Header ref="header" LocalData={this.localData}/>
                 <div className="clearfix"/>
-                <Main setUserData={() => this.refs.header.afterLogin()}
-                      delUserData={() => this.refs.header.afterLogout()}/>
+                <Main setUserData={() => this.refs.header.updateUserData()}/>
                 <Footer/>
             </div>
         )

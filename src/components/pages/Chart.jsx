@@ -63,6 +63,10 @@ export class Chart extends React.Component {
         Highcharts.stockChart(item + '-chart', {
             rangeSelector: {
                 buttons: [{
+                    type: 'second',
+                    count: 5,
+                    text: '5s'
+                },{
                     type: 'minute',
                     count: 1,
                     text: '1m'
@@ -95,7 +99,7 @@ export class Chart extends React.Component {
             xAxis: {
                 type: 'datetime',
                 tickPixelInterval: 150,
-                maxZoom: 20 * 1000
+                maxZoom: 2 * 1000
             },
             credits: {
                 enabled: false
@@ -130,6 +134,9 @@ export class Chart extends React.Component {
         Highcharts.setOptions({
             global: {
                 useUTC: false
+            },
+            lang:{
+                rangeSelectorZoom: 'Live'
             }
         });
         this.AllCurrencies();

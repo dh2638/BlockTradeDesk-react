@@ -30,7 +30,7 @@ export class Main extends React.Component {
                     <PublicRoute exact path="/password-reset/set-password/" component={ForgetPasswordSetPassword}/>
 
                     <PrivateRoute exact path="/dashboard/" component={Dashboard}/>
-                    <PrivateRoute exact path="/logout/" component={() => (<Logout delLoginProp={this.props.delUserData}/>)} />
+                    <PrivateRoute exact path="/logout/" component={() => (<Logout delLoginProp={this.props.setUserData}/>)} />
                     <PrivateRoute exact path="/profile/edit/" component={() => (<ProfileEdit setLoginProp={this.props.setUserData} />)}/>
                     <PrivateRoute exact path="/password-change/" component={PasswordChange}/>
                     {/*<Route component={NotFound}/>*/}
