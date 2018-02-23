@@ -78,7 +78,6 @@ export class UserTransactions extends React.Component {
                         </div>
                     </div>
                 }
-
                 <div className="secTitleMain">
                     <div className="secTitle">Recent Transaction</div>
                 </div>
@@ -108,7 +107,6 @@ export class UserTransactions extends React.Component {
                             </table>
                             :
                             <p className="text-center">No record found</p>
-
                         }
                         {sold ?
                             <div className="totleRow">Total Balance <span className="price">$ {total_amount.toLocaleString('en')}</span>
@@ -138,7 +136,6 @@ export class UserTransactions extends React.Component {
                             </table>
                             :
                             <p className="text-center">No record found</p>
-
                         }
                         {bought ?
                             <div className="totleRow">Total Balance <span className="price">$ {total_amount.toLocaleString('en')}</span>

@@ -60,26 +60,45 @@ export class Chart extends React.Component {
 
     drawGraph(item, chart_data = [], key) {
         let event = this;
-
         Highcharts.stockChart(item + '-chart', {
             rangeSelector: {
                 buttons: [{
+                    type: 'minute',
                     count: 1,
-                    type: 'minute',
-                    text: '1M'
+                    text: '1m'
                 }, {
-                    count: 5,
                     type: 'minute',
-                    text: '5M'
+                    count: 60,
+                    text: '1h'
+                }, {
+                    type: 'day',
+                    count: 1,
+                    text: '1d'
+                }, {
+                    type: 'week',
+                    count: 1,
+                    text: '1w'
+                }, {
+                    type: 'month',
+                    count: 1,
+                    text: '1M'
                 }, {
                     type: 'all',
                     text: 'All'
                 }],
-                inputEnabled: false,
+                inputEnabled: true,
                 selected: 0
             },
             title: {
                 text: item + ' Price'
+            },
+            xAxis: {
+                type: 'datetime',
+                tickPixelInterval: 150,
+                maxZoom: 20 * 1000
+            },
+            credits: {
+                enabled: false
             },
             series: [{
                 name: item,
@@ -102,13 +121,17 @@ export class Chart extends React.Component {
                     }
                 }
             },
-
         });
         return true
     }
 
 
     componentWillMount() {
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
         this.AllCurrencies();
         const {coins} = this.state;
         let event = this;
@@ -167,7 +190,7 @@ export class Chart extends React.Component {
     }
 
 
-    AllCurrencies(start_date, end_date) {
+    AllCurrencies() {
         let event = this;
         getcurrencyType().then(
             data => {
@@ -221,16 +244,17 @@ export class Chart extends React.Component {
 
 
     render() {
-        const {chart_data, currencies, status, coins} = this.state;
+        const {currencies, coins} = this.state;
         return (
             <div className="whiteBox">
                 <div className="whiteBoxHead">
                     <div className="pull-right">
                         <div className="actionMain dropdownSlide">
-
+                            {currencies.length > 3 &&
                             <div className="dropClick actionBtn trans">
                                 <img src={"../" + DarkDotImage} alt=""/>
                             </div>
+                            }
                             <div className="dropdown_box">
                                 <ul>
                                     {currencies && currencies.map(function (item, index) {
@@ -292,14 +316,6 @@ export class Chart extends React.Component {
     }
 }
 
-function getAllCurrencies(start_date, end_date) {
-    let API_URL = Config['api']['currencies_hour_data'];
-    let requestData = {};
-    if (start_date && end_date) {
-        requestData = {'start_date': start_date, 'end_date': end_date};
-    }
-    return apiMethods.get(API_URL, requestData, true)
-}
 
 function getcurrencyType() {
     let API_URL = Config['api']['currency_type'];
@@ -307,17 +323,8 @@ function getcurrencyType() {
     return apiMethods.get(API_URL, requestData, true)
 }
 
-function currentCoinRate(code, time) {
-    let API_URL = '/v1/exchangerate/' + code + '/USD';
-    if (time) {
-        API_URL = API_URL + '?time=' + time
-    }
-    console.log(API_URL);
-    return apiMethods.coinapi(API_URL)
-}
-
 function getcurrencyData(code) {
-    let API_URL = '/v1/ohlcv/KRAKEN_SPOT_' + code + '_USD/latest?period_id=1HRS&limit=720';
+    let API_URL = '/v1/ohlcv/KRAKEN_SPOT_' + code + '_USD/latest?period_id=1HRS&limit=768';
     return apiMethods.coinapi(API_URL)
 }
 
