@@ -53,13 +53,13 @@ export class PasswordChange extends React.Component {
                             <div className={'inputMain' + (submitted && !old_password ? ' has-error' : '')}>
                                 <input id="id_old_password" name="old_password" className="inputBox" type="password"
                                        placeholder="Old Password *" value={old_password} onChange={this.handleChange}/>
-                                <span className="passIcon"></span>
+                                <span className="passIcon"/>
                             </div>
                             {submitted && !password && <div className="help-block">Password is required.</div>}
                             <div className={'inputMain' + (submitted && !password ? ' has-error' : '')}>
                                 <input id="id_password" name="password" className="inputBox" type="password"
                                        placeholder="Password *" value={password} onChange={this.handleChange}/>
-                                <span className="passIcon"></span>
+                                <span className="passIcon"/>
                             </div>
                             {submitted && !password && <div className="help-block">Password is required.</div>}
                             <div
@@ -67,7 +67,7 @@ export class PasswordChange extends React.Component {
                                 <input id="id_confirm_password" name="confirm_password" className="inputBox"
                                        type="password" placeholder="Confirm password *" value={confirm_password}
                                        onChange={this.handleChange}/>
-                                <span className="passIcon"></span>
+                                <span className="passIcon"/>
                             </div>
                             {submitted && !confirm_password &&
                             <div className="help-block">Confirm Password is required.</div>}

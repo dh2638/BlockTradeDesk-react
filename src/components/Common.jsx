@@ -66,7 +66,6 @@ function put(URL, requestData, Auth) {
     }
     return fetch(Config['domain'] + URL, requestOptions)
         .then(response => {
-
             if (!response.ok) {
                 return response.json().then(data => {
                         return Promise.reject(data['non_field_errors']);

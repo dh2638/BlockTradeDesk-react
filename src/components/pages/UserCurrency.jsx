@@ -2,8 +2,6 @@ import React from 'react';
 import {apiMethods} from "../Common";
 
 let Config = require('../Global');
-let moment = require('moment');
-
 
 export class UserCurrency extends React.Component {
     constructor(props) {
@@ -40,13 +38,6 @@ export class UserCurrency extends React.Component {
         );
     }
 
-    userCurrenciesClick(day) {
-        let dateTo = moment().unix();
-        let dateFrom = moment().subtract(day, 'd').unix();
-        this.userCurrencies(dateFrom, dateTo);
-        this.setState({user_currency_day: day});
-    }
-
     totalAmount() {
         const {user_total_amount} = this.state;
         return user_total_amount
@@ -58,32 +49,6 @@ export class UserCurrency extends React.Component {
         if (user_currency) {
             return (
                 <div className="whiteBox secBox">
-                    {/*{user_currency_day === 7 ?*/}
-                    {/*<div className="actionMain dropdownSlide">*/}
-                    {/*<div className="dropClick paging actionBtn trans"><span*/}
-                    {/*onClick={() => this.userCurrenciesClick(7)}>Past 7 days</span> <img*/}
-                    {/*src={require('./../../static/images/dark-dots.svg')} alt=""/></div>*/}
-                    {/*<div className="dropdown_box">*/}
-                    {/*<ul>*/}
-                    {/*<li><a title="Past 30 days" className="darkdots"*/}
-                    {/*onClick={() => this.userCurrenciesClick(30)}>Past 30 days</a></li>*/}
-                    {/*</ul>*/}
-                    {/*</div>*/}
-                    {/*</div>*/}
-                    {/*:*/}
-                    {/*<div className="actionMain dropdownSlide">*/}
-                    {/*<div className="dropClick paging actionBtn trans"><span*/}
-                    {/*onClick={() => this.userCurrenciesClick(30)}>Past 30 days</span> <img*/}
-                    {/*src={require('./../../static/images/dark-dots.svg')} alt=""/></div>*/}
-                    {/*<div className="dropdown_box">*/}
-                    {/*<ul>*/}
-                    {/*<li><a title="Past 7 days" className="darkdots"*/}
-                    {/*onClick={() => this.userCurrenciesClick(7)}>Past*/}
-                    {/*7 days</a></li>*/}
-                    {/*</ul>*/}
-                    {/*</div>*/}
-                    {/*</div>*/}
-                    {/*}*/}
                     <div className="secTitleMain">
                         <div className="secTitle">Your Portfolio</div>
                         <div className="subTitle">Total Value: <strong>$ {user_total_amount.toLocaleString('en')}</strong></div>
@@ -93,8 +58,8 @@ export class UserCurrency extends React.Component {
                             let current_rate = event.getCurrenctRate(item.currency.code);
                             return (<li key={index}>
                                 <div className="col-1 coinName">{item.currency.name}</div>
-                                <div className="col-2"><span
-                                    className="priceTag">$ {current_rate.toLocaleString('en')}</span>{item.amount}
+                                <div className="col-2">
+                                    <span className="priceTag"> ${current_rate.toLocaleString('en')}</span>{item.amount}
                                 </div>
                             </li>)
                         })}
@@ -104,7 +69,7 @@ export class UserCurrency extends React.Component {
             )
         }
         else {
-            return (<div></div>)
+            return (<div/>)
         }
     }
 }

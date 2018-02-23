@@ -1,8 +1,6 @@
 import React from 'react';
 import {HashRouter as Router} from "react-router-dom";
 
-import {history} from "./History";
-
 import {Login} from "./pages/Login";
 import {Logout} from "./pages/Logout";
 

@@ -1,11 +1,11 @@
 import React from "react";
 import {apiMethods} from "../Common";
 import DarkDotImage from "./../../static/images/dark-dots.svg";
+import Config from "../Global";
+import moment from "moment";
+import Highcharts from "highcharts/highstock";
 
-let Config = require('../Global');
 let ws = new WebSocket(Config['api']['stream_websocket']);
-let moment = require('moment');
-let Highcharts = require('highcharts/highstock');
 
 export class Chart extends React.Component {
     constructor(props) {
@@ -134,7 +134,6 @@ export class Chart extends React.Component {
         });
         this.AllCurrencies();
         const {coins} = this.state;
-        let event = this;
         ws.onopen = function () {
             // Web Socket is connected, send data using send()
             ws.send(JSON.stringify({
@@ -145,24 +144,22 @@ export class Chart extends React.Component {
                 "subscribe_filter_symbol_id": Object.keys(coins['current'])
             }));
         };
-
-
         ws.onclose = function () {
             // websocket is closed.
         };
 
-        window.onbeforeunload = function (event) {
-            socket.close();
+        window.onbeforeunload = function () {
+            ws.close();
         };
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate() {
         const {chart_data, currencies, is_draw, coins} = this.state;
         let status = false;
         let event = this;
 
         if (currencies && Object.keys(chart_data).length === currencies.length && !is_draw) {
-            currencies.map(function (item, index) {
+            currencies.map(function (item) {
                 if (chart_data[item.name] && document.getElementById(item.name + '-chart')) {
                     status = event.drawGraph(item.name, chart_data[item.name], "KRAKEN_SPOT_" + item.code + "_USD");
                 }
@@ -197,8 +194,7 @@ export class Chart extends React.Component {
                 if (data) {
                     let currency_type = [];
                     let chart_data = {};
-                    let reverse = false;
-                    data['results'].map(function (item, index) {
+                    data['results'].map(function (item) {
                         currency_type.push(item);
                         getcurrencyData(item.code).then(
                             coinrate => {
@@ -234,14 +230,13 @@ export class Chart extends React.Component {
                     this.setState({currencies: currency_type});
                 }
             }
-        ).catch(function (ex) {
+        ).catch(function () {
             localStorage.removeItem('user_token');
             localStorage.removeItem('user_first_name');
             localStorage.removeItem('user_last_name');
             window.location.hash = "#/"
         });
     }
-
 
     render() {
         const {currencies, coins} = this.state;
@@ -277,8 +272,8 @@ export class Chart extends React.Component {
                                 if (index < 3) {
                                     return (<li key={index} className={index === 0 ? 'coinTabActive' : ''}
                                                 data-coin={item.name.toLowerCase()}>
-                                            <span>{item.name}</span>
-                                            $ {coins['current']['KRAKEN_SPOT_' + item.code + '_USD'].toLocaleString('en')}
+                                            <span>{item.name} </span>
+                                            ${coins['current']['KRAKEN_SPOT_' + item.code + '_USD'].toLocaleString('en')}
                                         </li>
                                     )
                                 }
@@ -287,7 +282,7 @@ export class Chart extends React.Component {
                     </div>
                 </div>
                 {currencies && currencies.map(function (item, index) {
-                    let amount = 0
+                    let amount = 0;
                     if (coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST']) {
                         amount = 100 - (coins['current']['KRAKEN_SPOT_' + item.code + '_USD'] / (coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'])) * 100;
                     }
@@ -306,7 +301,7 @@ export class Chart extends React.Component {
                                 <strong>{-amount.toFixed(2)} %</strong> <span>since last month (%)</span></div>
                         </div>
                         <div className="chartMain">
-                            <div id={item.name + "-chart"} className="barChart"></div>
+                            <div id={item.name + "-chart"} className="barChart"/>
                         </div>
                     </div>)
                 })}
@@ -315,7 +310,6 @@ export class Chart extends React.Component {
         )
     }
 }
-
 
 function getcurrencyType() {
     let API_URL = Config['api']['currency_type'];

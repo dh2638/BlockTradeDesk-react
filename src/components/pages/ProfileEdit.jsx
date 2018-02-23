@@ -1,5 +1,4 @@
-import React from 'react';
-import {history} from "../History";
+import React from "react";
 import {apiMethods} from "../Common";
 
 let Config = require('../Global');
@@ -18,13 +17,13 @@ export class ProfileEdit extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
         getname().then(
             data => {
-                if (data) {
-                    this.setState({first_name: data['first_name']});
-                    this.setState({last_name: data['last_name']})
-                }
+                this.setState({
+                    first_name: data['first_name'],
+                    last_name: data['last_name']
+                });
             },
         )
     }
@@ -36,7 +35,6 @@ export class ProfileEdit extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-
         this.setState({submitted: true});
         const {first_name, last_name} = this.state;
         if (first_name && last_name) {
