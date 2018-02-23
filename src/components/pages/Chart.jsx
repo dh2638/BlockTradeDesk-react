@@ -65,7 +65,7 @@ export class Chart extends React.Component {
                 buttons: [{
                     type: 'second',
                     count: 5,
-                    text: '5s'
+                    text: 'Live'
                 },{
                     type: 'minute',
                     count: 1,
@@ -134,9 +134,6 @@ export class Chart extends React.Component {
         Highcharts.setOptions({
             global: {
                 useUTC: false
-            },
-            lang:{
-                rangeSelectorZoom: 'Live'
             }
         });
         this.AllCurrencies();
