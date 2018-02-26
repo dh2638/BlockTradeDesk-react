@@ -91,7 +91,7 @@ export class Chart extends React.Component {
                     text: 'All'
                 }],
                 inputEnabled: true,
-                selected: 0
+                selected: 3
             },
             title: {
                 text: item + ' Price'
