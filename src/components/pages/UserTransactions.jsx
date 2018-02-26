@@ -16,7 +16,7 @@ export class UserTransactions extends React.Component {
         };
 
     }
-    componentDidMount() {
+    componentWillMount() {
         this.transactions();
     }
 
@@ -29,7 +29,9 @@ export class UserTransactions extends React.Component {
             },
         );
     }
-
+    shouldComponentUpdate(nextProps, nextState) {
+        return !!nextState['transaction']
+    }
     transactionClick(day) {
         let dateTo = moment().unix();
         let dateFrom = moment().subtract(day, 'd').unix();
@@ -148,7 +150,7 @@ export class UserTransactions extends React.Component {
             </div>);
         }
         else {
-            return (<div></div>)
+            return (<div/>)
         }
     }
 }

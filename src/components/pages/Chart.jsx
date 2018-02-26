@@ -66,7 +66,7 @@ export class Chart extends React.Component {
                     type: 'second',
                     count: 5,
                     text: 'Live'
-                },{
+                }, {
                     type: 'minute',
                     count: 1,
                     text: '1m'
@@ -155,6 +155,10 @@ export class Chart extends React.Component {
         window.onbeforeunload = function () {
             ws.close();
         };
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return !nextState['is_draw']
     }
 
     componentDidUpdate() {
@@ -309,7 +313,6 @@ export class Chart extends React.Component {
                         </div>
                     </div>)
                 })}
-
             </div>
         )
     }

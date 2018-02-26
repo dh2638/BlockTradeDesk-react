@@ -8,7 +8,10 @@ export const apiMethods = {
     coinapi
 };
 
-
+function setAuthentication(options) {
+     options['headers']['Authorization'] = 'Token ' + localStorage.getItem('user_token');
+    return options
+}
 function post(URL, requestData, Auth) {
     const requestOptions = {
         method: 'POST',
@@ -16,7 +19,7 @@ function post(URL, requestData, Auth) {
         body: requestData
     };
     if (Auth) {
-        requestOptions['headers']['Authorization'] = 'Token ' + localStorage.getItem('user_token')
+        setAuthentication(requestOptions);
     }
     return fetch(Config['domain'] + URL, requestOptions)
         .then(response => {
@@ -44,7 +47,7 @@ function get(URL, requestData, Auth) {
         headers: {'Content-Type': 'application/json'},
     };
     if (Auth) {
-        requestOptions['headers']['Authorization'] = 'Token ' + localStorage.getItem('user_token')
+        setAuthentication(requestOptions);
     }
     return fetch(Config['domain'] + URL, requestOptions)
         .then(response => {
@@ -62,7 +65,7 @@ function put(URL, requestData, Auth) {
         body: requestData
     };
     if (Auth) {
-        requestOptions['headers']['Authorization'] = 'Token ' + localStorage.getItem('user_token')
+        setAuthentication(requestOptions);
     }
     return fetch(Config['domain'] + URL, requestOptions)
         .then(response => {

@@ -25,7 +25,7 @@ export class ProfileEdit extends React.Component {
                     last_name: data['last_name']
                 });
             },
-        )
+        );
     }
 
     handleChange(e) {

@@ -17,8 +17,12 @@ export class UserCurrency extends React.Component {
         this.userCurrencies();
     }
 
-    getCurrenctRate(code){
+    getCurrenctRate(code) {
         return this.props.getCurrencyValue(code);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return !!nextState['user_currency'];
     }
 
     userCurrencies(start_date, end_date) {
@@ -45,13 +49,14 @@ export class UserCurrency extends React.Component {
 
     render() {
         const {user_currency, user_total_amount} = this.state;
-        const event= this;
+        const event = this;
         if (user_currency) {
             return (
                 <div className="whiteBox secBox">
                     <div className="secTitleMain">
                         <div className="secTitle">Your Portfolio</div>
-                        <div className="subTitle">Total Value: <strong>$ {user_total_amount.toLocaleString('en')}</strong></div>
+                        <div className="subTitle">Total Value:
+                            <strong>$ {user_total_amount.toLocaleString('en')}</strong></div>
                     </div>
                     <ul className="tableRow">
                         {user_currency['results'].map(function (item, index) {
@@ -71,6 +76,7 @@ export class UserCurrency extends React.Component {
         else {
             return (<div/>)
         }
+
     }
 }
 
