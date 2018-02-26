@@ -54,13 +54,13 @@ export class Login extends React.Component {
                         <form onSubmit={this.handleSubmit} method="post">
                             <div className={'inputMain' + (submitted && !email ? ' has-error' : '')}>
                                 <input id="id_email" name="email" className="inputBox" type="email"
-                                       placeholder="Email address *" value={email} onChange={this.handleChange}/>
+                                       placeholder="Email address *" value={email} onChange={this.handleChange} aria-label="Email"/>
                             </div>
                             {submitted && !email && <div className="help-block">Email is required.</div>}
 
                             <div className={'inputMain passwField' + (submitted && !password ? ' has-error' : '')}>
                                 <input id="id_password" name="password" className="inputBox" type="password"
-                                       placeholder="Password *" value={password} onChange={this.handleChange}/>
+                                       placeholder="Password *" value={password} onChange={this.handleChange} aria-label="Password" />
                                 <span className="passIcon"/>
                             </div>
                             {submitted && !password && <div className="help-block">Password is required.</div>}
