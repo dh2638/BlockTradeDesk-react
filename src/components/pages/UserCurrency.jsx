@@ -8,7 +8,6 @@ export class UserCurrency extends React.Component {
         super(props);
         this.state = {
             user_currency: '',
-            user_currency_day: 7,
             user_total_amount: 0
         };
     }
@@ -33,8 +32,9 @@ export class UserCurrency extends React.Component {
                 if (data) {
                     this.setState({user_currency: data});
                     data['results'].map(function (item) {
-                        let current_rate = event.getCurrenctRate(item.currency.code);
-                        total += item.amount * current_rate;
+                        let current_rate = event.getCurrenctRate(item.code);
+                        let amount = item.amount ? item.amount : 0.0;
+                        total += amount * current_rate;
                     });
                     this.setState({user_total_amount: total})
                 }
@@ -56,19 +56,18 @@ export class UserCurrency extends React.Component {
                     <div className="secTitleMain">
                         <div className="secTitle">Your Portfolio</div>
                         <div className="subTitle">Total Value:
-                            <strong>$ {user_total_amount.toLocaleString('en')}</strong></div>
+                            <strong> ${user_total_amount.toLocaleString('en')}</strong></div>
                     </div>
                     <ul className="tableRow">
                         {user_currency['results'].map(function (item, index) {
-                            let current_rate = event.getCurrenctRate(item.currency.code);
+                            let current_rate = event.getCurrenctRate(item.code);
                             return (<li key={index}>
-                                <div className="col-1 coinName">{item.currency.name}</div>
+                                <div className="col-1 coinName">{item.name}</div>
                                 <div className="col-2">
                                     <span className="priceTag"> ${current_rate.toLocaleString('en')}</span>{item.amount}
                                 </div>
                             </li>)
                         })}
-
                     </ul>
                 </div>
             )

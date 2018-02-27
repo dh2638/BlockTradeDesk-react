@@ -6,7 +6,6 @@ let moment = require('moment');
 import DarkDotImage from './../../static/images/dark-dots.svg';
 
 
-
 export class UserTransactions extends React.Component {
     constructor(props) {
         super(props);
@@ -16,6 +15,7 @@ export class UserTransactions extends React.Component {
         };
 
     }
+
     componentWillMount() {
         this.transactions();
     }
@@ -29,9 +29,11 @@ export class UserTransactions extends React.Component {
             },
         );
     }
+
     shouldComponentUpdate(nextProps, nextState) {
         return !!nextState['transaction']
     }
+
     transactionClick(day) {
         let dateTo = moment().unix();
         let dateFrom = moment().subtract(day, 'd').unix();
@@ -41,15 +43,11 @@ export class UserTransactions extends React.Component {
 
     render() {
         const {transaction, transaction_day} = this.state;
-        let sold = false;
-        let bought = false;
+        let types = ['SOLD', 'BOUGHT', "SENT", "RECEIVED"];
+        let transdict = {'SOLD': [], 'BOUGHT': [], 'SENT': [], 'RECEIVED': []}
         if (transaction) {
             transaction['results'].map(function (item) {
-                if (item.transaction_type === "SOLD") {
-                    sold = true;
-                } else if (item.transaction_type === "BOUGHT") {
-                    bought = true;
-                }
+                transdict[item.transaction_type].push(item)
             });
             let total_amount = this.props.setAmount();
             return (<div className="whiteBox secBox" id="transations">
@@ -58,7 +56,7 @@ export class UserTransactions extends React.Component {
                         <div className="dropClick paging actionBtn trans">
                                 <span data-days="7"
                                       onClick={() => this.transactionClick(7)}>Past 7 days</span>
-                            <img src={"../"+DarkDotImage} alt=""/></div>
+                            <img src={"../" + DarkDotImage} alt=""/></div>
                         <div className="dropdown_box">
                             <ul>
                                 <li><a data-days="30" className="darkdots" onClick={() => this.transactionClick(30)}
@@ -71,7 +69,7 @@ export class UserTransactions extends React.Component {
                         <div className="dropClick paging actionBtn trans">
                                 <span data-days="30"
                                       onClick={() => this.transactionClick(30)}>Past 30 days</span>
-                            <img src={"../"+DarkDotImage} alt=""/></div>
+                            <img src={"../" + DarkDotImage} alt=""/></div>
                         <div className="dropdown_box">
                             <ul>
                                 <li><a data-days="7" className="darkdots" onClick={() => this.transactionClick(7)}
@@ -84,70 +82,43 @@ export class UserTransactions extends React.Component {
                     <div className="secTitle">Recent Transaction</div>
                 </div>
                 <ul className="tabList">
-                    <li className="tabActive" data-type="Sold">Sold</li>
-                    <li data-type="bought" className="">Bought</li>
+                    {types.map(function (type, index) {
+                        return (<li data-type={type} className={index === 0 && "tabActive"}>{type}</li>)
+                    })}
                 </ul>
                 <div className="tabMain">
-                    <div id="Sold" className="tabBody tableRow tabActive fadeIndiv">
-                        {sold ?
-                            <table className="tableMain" width="100%">
-                                <tbody>
-                                {transaction['results'].map(function (item, index) {
-                                        if (item.transaction_type === "SOLD") {
-                                            return (<tr key={index}>
-                                                <td width="150px" valign="middle" className="nameField">{item.created}</td>
-                                                <td width="100px" valign="middle"><span
-                                                    className="simbole">{item.currency.code}</span></td>
-                                                <td width="350px" valign="middle"><p>{item.currency.name}</p></td>
-                                                <td valign="middle"><span className="table_price">${item.price.toLocaleString('en')}</span><span
-                                                    className="wasPrice"> {item.amount}</span></td>
-                                            </tr>)
-                                        }
-                                    }
-                                )}
-                                </tbody>
-                            </table>
-                            :
-                            <p className="text-center">No record found</p>
-                        }
-                        {sold ?
-                            <div className="totleRow">Total Balance <span className="price">$ {total_amount.toLocaleString('en')}</span>
-                            </div>
-                            : <table className="tableMain" width="100%">
-                            </table>
-                        }
-                    </div>
-                    <div id="bought" className="tabBody tableRow ">
-                        {bought ?
-                            <table className="tableMain" width="100%">
-                                <tbody>
-                                {transaction['results'].map(function (item, index) {
-                                        if (item.transaction_type === "BOUGHT") {
-                                            return (<tr key={index}>
-                                                <td width="150px" valign="middle" className="nameField">{item.created}</td>
-                                                <td width="100px" valign="middle"><span
-                                                    className="simbole">{item.currency.code}</span></td>
-                                                <td width="350px" valign="middle"><p>{item.currency.name}</p></td>
-                                                <td valign="middle"><span className="table_price">${item.price.toLocaleString('en')}</span><span
-                                                    className="wasPrice">{item.amount}</span></td>
-                                            </tr>)
-                                        }
-                                    }
-                                )}
-                                </tbody>
-                            </table>
-                            :
-                            <p className="text-center">No record found</p>
-                        }
-                        {bought ?
-                            <div className="totleRow">Total Balance <span className="price">$ {total_amount.toLocaleString('en')}</span>
-                            </div>
-                            : <table className="tableMain" width="100%">
-                            </table>
-                        }
-                    </div>
+                    {types.map(function (type, index) {
+                        return (
+                            <div id={type} key={index}
+                                 className={"tabBody tableRow " + (index === 0 ? "tabActive" : '')}>
+                                {transdict[type].length ?
+                                    <table className="tableMain" width="100%">
+                                        <tbody>
+                                        {transdict[type].map(function (item, index) {
+                                                return (<tr key={index}>
+                                                    <td width="150px" valign="middle"
+                                                        className="nameField">{item.created}</td>
+                                                    <td width="100px" valign="middle"><span
+                                                        className="simbole">{item.currency.code}</span></td>
+                                                    <td width="350px" valign="middle"><p>{item.currency.name}</p></td>
+                                                    <td valign="middle"><span
+                                                        className="table_price">${item.price.toLocaleString('en')}</span><span
+                                                        className="wasPrice"> {item.amount}</span></td>
+                                                </tr>)})}
+                                        </tbody>
+                                    </table>
+                                    :
+                                    <p className="text-center">No record found</p>
+                                }
+                                {transdict[type].length ?
+                                    <div className="totleRow">Total Balance <span
+                                        className="price">${total_amount.toLocaleString('en')}</span>
+                                    </div> : <table className="tableMain" width="100%"/>
+                                }
+                            </div>)
+                    })}
                 </div>
-            </div>);
+            </div>)
         }
         else {
             return (<div/>)

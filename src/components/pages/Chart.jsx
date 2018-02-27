@@ -58,6 +58,11 @@ export class Chart extends React.Component {
         return coins['current']['KRAKEN_SPOT_' + code + '_USD']
     }
 
+    getCurrenciesTypes() {
+        const {currencies} = this.state;
+        return currencies
+    }
+
     drawGraph(item, chart_data = [], key) {
         let event = this;
         Highcharts.stockChart(item + '-chart', {
