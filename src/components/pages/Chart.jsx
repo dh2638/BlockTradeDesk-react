@@ -15,9 +15,14 @@ export class Chart extends React.Component {
             chart_data: false,
             status: null,
             is_draw: false,
-            coins: this.getCoinsRates()
+            coins: this.getCoinsRates(),
+            response:false
 
         };
+    }
+    checkRender(){
+        const {response} = this.state;
+        return response
     }
 
     coins_dict() {
@@ -241,6 +246,7 @@ export class Chart extends React.Component {
                     });
                     this.setState({chart_data: chart_data});
                     this.setState({currencies: currency_type});
+                    this.setState({response: true});
                 }
             }
         ).catch(function () {

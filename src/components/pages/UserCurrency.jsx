@@ -8,7 +8,7 @@ export class UserCurrency extends React.Component {
         super(props);
         this.state = {
             user_currency: '',
-            user_total_amount: 0
+            user_total_amount: undefined
         };
     }
 
@@ -26,31 +26,46 @@ export class UserCurrency extends React.Component {
 
     userCurrencies(start_date, end_date) {
         const event = this;
-        let total = 0;
         getUserCurrencies(start_date, end_date).then(
             data => {
                 if (data) {
                     this.setState({user_currency: data});
-                    data['results'].map(function (item) {
-                        let current_rate = event.getCurrenctRate(item.code);
-                        let amount = item.amount ? item.amount : 0.0;
-                        total += amount * current_rate;
-                    });
-                    this.setState({user_total_amount: total})
                 }
+                this.CalculateTotal()
             },
         );
     }
 
+    CalculateTotal() {
+        const {user_currency} = this.state;
+        const event = this;
+        if (user_currency) {
+            let total = 0;
+            user_currency['results'].map(function (item) {
+                let current_rate = event.getCurrenctRate(item.code);
+                let amount = item.amount ? item.amount : 0.0;
+                total += amount * current_rate;
+            });
+            this.setState({user_total_amount: total});
+            return total
+        }
+
+    }
+
     totalAmount() {
         const {user_total_amount} = this.state;
-        return user_total_amount
+        if (!(user_total_amount === undefined)) {
+            return user_total_amount
+        }
+        else {
+            this.CalculateTotal()
+        }
     }
 
     render() {
         const {user_currency, user_total_amount} = this.state;
         const event = this;
-        if (user_currency) {
+        if (user_currency && user_total_amount) {
             return (
                 <div className="whiteBox secBox">
                     <div className="secTitleMain">
@@ -64,7 +79,8 @@ export class UserCurrency extends React.Component {
                             return (<li key={index}>
                                 <div className="col-1 coinName">{item.name}</div>
                                 <div className="col-2">
-                                    <span className="priceTag"> ${current_rate.toLocaleString('en')}</span>{item.amount}
+                                    <span className="priceTag"> ${(item.amount * current_rate).toLocaleString('en')}</span>
+                                    {item.amount} {item.code}
                                 </div>
                             </li>)
                         })}

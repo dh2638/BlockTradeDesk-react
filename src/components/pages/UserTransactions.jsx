@@ -44,12 +44,11 @@ export class UserTransactions extends React.Component {
     render() {
         const {transaction, transaction_day} = this.state;
         let types = ['SOLD', 'BOUGHT', "SENT", "RECEIVED"];
-        let transdict = {'SOLD': [], 'BOUGHT': [], 'SENT': [], 'RECEIVED': []}
+        let transdict = {'SOLD': [], 'BOUGHT': [], 'SENT': [], 'RECEIVED': []};
         if (transaction) {
             transaction['results'].map(function (item) {
                 transdict[item.transaction_type].push(item)
             });
-            let total_amount = this.props.setAmount();
             return (<div className="whiteBox secBox" id="transations">
                 {transaction_day === 7 ?
                     <div className="actionMain dropdownSlide">
@@ -100,20 +99,16 @@ export class UserTransactions extends React.Component {
                                                         className="nameField">{item.created}</td>
                                                     <td width="100px" valign="middle"><span
                                                         className="simbole">{item.currency.code}</span></td>
-                                                    <td width="350px" valign="middle"><p>{item.currency.name}</p></td>
-                                                    <td valign="middle"><span
+                                                    <td width="200px" valign="middle"><p>{item.currency.name}</p></td>
+                                                    <td  width="200px" valign="middle"><span
                                                         className="table_price">${item.price.toLocaleString('en')}</span><span
-                                                        className="wasPrice"> {item.amount}</span></td>
+                                                        className="wasPrice"> {item.amount} {item.currency.code}</span></td>
+                                                    <td width="350px" valign="middle"><p>{item.message}</p></td>
                                                 </tr>)})}
                                         </tbody>
                                     </table>
                                     :
                                     <p className="text-center">No record found</p>
-                                }
-                                {transdict[type].length ?
-                                    <div className="totleRow">Total Balance <span
-                                        className="price">${total_amount.toLocaleString('en')}</span>
-                                    </div> : <table className="tableMain" width="100%"/>
                                 }
                             </div>)
                     })}
