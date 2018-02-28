@@ -65,7 +65,7 @@ export class UserCurrency extends React.Component {
     render() {
         const {user_currency, user_total_amount} = this.state;
         const event = this;
-        if (user_currency && user_total_amount) {
+        if (user_currency && user_total_amount !== undefined) {
             return (
                 <div className="whiteBox secBox">
                     <div className="secTitleMain">
