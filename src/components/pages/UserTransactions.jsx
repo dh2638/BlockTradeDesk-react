@@ -1,9 +1,9 @@
 import React from 'react';
 import {apiMethods} from "../Common";
+import DarkDotImage from './../../static/images/dark-dots.svg';
 
 let Config = require('../Global');
 let moment = require('moment');
-import DarkDotImage from './../../static/images/dark-dots.svg';
 
 
 export class UserTransactions extends React.Component {
@@ -13,7 +13,6 @@ export class UserTransactions extends React.Component {
             transaction: '',
             transaction_day: 7
         };
-
     }
 
     componentWillMount() {
@@ -53,8 +52,7 @@ export class UserTransactions extends React.Component {
                 {transaction_day === 7 ?
                     <div className="actionMain dropdownSlide">
                         <div className="dropClick paging actionBtn trans">
-                                <span data-days="7"
-                                      onClick={() => this.transactionClick(7)}>Past 7 days</span>
+                            <span data-days="7" onClick={() => this.transactionClick(7)}>Past 7 days</span>
                             <img src={"../" + DarkDotImage} alt=""/></div>
                         <div className="dropdown_box">
                             <ul>
@@ -66,13 +64,14 @@ export class UserTransactions extends React.Component {
                     :
                     <div className="actionMain dropdownSlide">
                         <div className="dropClick paging actionBtn trans">
-                                <span data-days="30"
-                                      onClick={() => this.transactionClick(30)}>Past 30 days</span>
+                            <span data-days="30" onClick={() => this.transactionClick(30)}>Past 30 days</span>
                             <img src={"../" + DarkDotImage} alt=""/></div>
                         <div className="dropdown_box">
                             <ul>
-                                <li><a data-days="7" className="darkdots" onClick={() => this.transactionClick(7)}
-                                       title="Past 7 days">Past 7 days</a></li>
+                                <li>
+                                    <a data-days="7" className="darkdots" onClick={() => this.transactionClick(7)}
+                                       title="Past 7 days">Past 7 days</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -94,23 +93,25 @@ export class UserTransactions extends React.Component {
                                     <table className="tableMain" width="100%">
                                         <tbody>
                                         {transdict[type].map(function (item, index) {
-                                                return (<tr key={index}>
-                                                    <td width="150px" valign="middle"
-                                                        className="nameField">{item.created}</td>
-                                                    <td width="100px" valign="middle"><span
-                                                        className="simbole">{item.currency.code}</span></td>
-                                                    <td width="200px" valign="middle"><p>{item.currency.name}</p></td>
-                                                    <td  width="200px" valign="middle"><span
-                                                        className="table_price">${item.price.toLocaleString('en')}</span><span
-                                                        className="wasPrice"> {item.amount} {item.currency.code}</span></td>
-                                                    <td width="350px" valign="middle"><p>{item.message}</p></td>
-                                                </tr>)})}
+                                            return (<tr key={index}>
+                                                <td width="150px" valign="middle"
+                                                    className="nameField">{item.created}</td>
+                                                <td width="100px" valign="middle"><span
+                                                    className="simbole">{item.currency.code}</span></td>
+                                                <td width="200px" valign="middle"><p>{item.currency.name}</p></td>
+                                                <td width="200px" valign="middle"><span
+                                                    className="table_price">${item.price.toLocaleString('en')}</span><span
+                                                    className="wasPrice"> {item.amount} {item.currency.code}</span></td>
+                                                <td width="350px" valign="middle"><p>{item.message}</p></td>
+                                            </tr>)
+                                        })}
                                         </tbody>
                                     </table>
                                     :
                                     <p className="text-center">No record found</p>
                                 }
-                            </div>)
+                            </div>
+                        )
                     })}
                 </div>
             </div>)

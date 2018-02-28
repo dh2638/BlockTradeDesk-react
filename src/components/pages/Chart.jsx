@@ -16,13 +16,8 @@ export class Chart extends React.Component {
             status: null,
             is_draw: false,
             coins: this.getCoinsRates(),
-            response:false
 
         };
-    }
-    checkRender(){
-        const {response} = this.state;
-        return response
     }
 
     coins_dict() {
@@ -175,7 +170,6 @@ export class Chart extends React.Component {
         const {chart_data, currencies, is_draw, coins} = this.state;
         let status = false;
         let event = this;
-
         if (currencies && Object.keys(chart_data).length === currencies.length && !is_draw) {
             currencies.map(function (item) {
                 if (chart_data[item.name] && document.getElementById(item.name + '-chart')) {
@@ -203,7 +197,6 @@ export class Chart extends React.Component {
         };
 
     }
-
 
     AllCurrencies() {
         let event = this;
@@ -246,7 +239,6 @@ export class Chart extends React.Component {
                     });
                     this.setState({chart_data: chart_data});
                     this.setState({currencies: currency_type});
-                    this.setState({response: true});
                 }
             }
         ).catch(function () {
@@ -289,8 +281,9 @@ export class Chart extends React.Component {
                         <ul>
                             {currencies && currencies.map(function (item, index) {
                                 if (index < 3) {
-                                    return (<li key={index} className={index === 0 ? 'coinTabActive' : ''}
-                                                data-coin={item.name.toLowerCase()}>
+                                    return (
+                                        <li key={index} className={index === 0 ? 'coinTabActive' : ''}
+                                            data-coin={item.name.toLowerCase()}>
                                             <span>{item.name} </span>
                                             ${coins['current']['KRAKEN_SPOT_' + item.code + '_USD'].toLocaleString('en')}
                                         </li>

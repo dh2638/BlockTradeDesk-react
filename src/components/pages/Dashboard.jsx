@@ -12,10 +12,8 @@ export class Dashboard extends React.Component {
                 <div className="container">
                     <Chart ref="chart" />
                     <UserCurrency ref="amount" getCurrenciesTypes={() => this.refs.chart.getCurrenciesTypes()}
-                                  getCurrencyValue={(code) => this.refs.chart.getCurrencyAmount(code)}
-                                  checkRender={() => this.refs.chart.checkRender()}/>
-                    <UserTransactions setAmount={() => this.refs.amount.totalAmount()}
-                                      checkRender={() => this.refs.chart.checkRender()}/>
+                                  getCurrencyValue={(code) => this.refs.chart.getCurrencyAmount(code)}/>
+                    <UserTransactions setAmount={() => this.refs.amount.totalAmount()} />
                 </div>
             </section>
         )

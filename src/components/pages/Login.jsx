@@ -37,7 +37,6 @@ export class Login extends React.Component {
                         localStorage.setItem('user_last_name', data.last_name);
                         this.props.setLoginProp();
                         window.location.hash = "#/dashboard/"
-                        // history.push('/dashboard/');
                     }
                 },
             );
@@ -53,8 +52,8 @@ export class Login extends React.Component {
                         <div className="loginTitle">Sign in to Blocktrade Desk</div>
                         <form onSubmit={this.handleSubmit} method="post">
                             <div className={'inputMain' + (submitted && !email ? ' has-error' : '')}>
-                                <input id="id_email" name="email" className="inputBox" type="email"
-                                       placeholder="Email address *" value={email} onChange={this.handleChange} aria-label="Email"/>
+                                <input id="id_email" name="email" className="inputBox" type="email" value={email}
+                                       placeholder="Email address *"  onChange={this.handleChange} aria-label="Email"/>
                             </div>
                             {submitted && !email && <div className="help-block">Email is required.</div>}
 

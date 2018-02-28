@@ -46,7 +46,6 @@ export class ProfileEdit extends React.Component {
                         this.props.setLoginProp();
                         setTimeout(function () {
                             window.location.hash = '#/dashboard/'
-                            // history.push('/dashboard/');
                         }, 500);
                     }
                 },
