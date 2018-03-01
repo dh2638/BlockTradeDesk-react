@@ -77,7 +77,7 @@ export class UserTransactions extends React.Component {
                     </div>
                 }
                 <div className="secTitleMain">
-                    <div className="secTitle">Recent Transaction</div>
+                    <div className="secTitle">Recent Transactions</div>
                 </div>
                 <ul className="tabList">
                     {types.map(function (type, index) {
