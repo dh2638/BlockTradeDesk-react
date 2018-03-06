@@ -11,12 +11,13 @@ export class UserTransactions extends React.Component {
         super(props);
         this.state = {
             transaction: '',
-            transaction_day: 7,
+            transaction_day: localStorage.getItem('transaction_day') ? localStorage.getItem('transaction_day') : 7,
         };
     }
 
     componentWillMount() {
-        this.transactions();
+        const {transaction_day} = this.state;
+        this.transactionClick(transaction_day)
     }
 
     transactions(start_date, end_date) {
@@ -38,6 +39,7 @@ export class UserTransactions extends React.Component {
         let dateFrom = moment().subtract(day, 'd').unix();
         this.transactions(dateFrom, dateTo);
         this.setState({transaction_day: day});
+        localStorage.setItem('transaction_day', day);
     }
 
     render() {
