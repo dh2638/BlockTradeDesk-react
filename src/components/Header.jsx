@@ -59,9 +59,6 @@ export class Header extends React.Component {
             <div key="third">
                 {user && <div className="subHead">
                     <div className="container">
-                        <div className="buttonMain pull-left">
-                            <a className="btn trans" href="#" title="MANAGE YOUR DIGITAL CURRENCY">MANAGE
-                                YOUR DIGITAL CURRENCY</a></div>
                         <div className="buttonMain pull-right">
                             <a href="#/dashboard/" className="btn active trans" title="Dashboard"> Dashboard</a>
                             <a href='#' className="btn trans" title="Settings"> Settings</a>

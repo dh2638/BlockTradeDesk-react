@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 import {apiMethods} from "../Common";
-import DarkDotImage from './../../static/images/dark-dots.svg';
+import DarkDotImage from "./../../static/images/dark-dots.svg";
 
 let Config = require('../Global');
 let moment = require('moment');
@@ -11,7 +11,7 @@ export class UserTransactions extends React.Component {
         super(props);
         this.state = {
             transaction: '',
-            transaction_day: 7
+            transaction_day: 7,
         };
     }
 
@@ -44,51 +44,71 @@ export class UserTransactions extends React.Component {
         const {transaction, transaction_day} = this.state;
         let types = ['SOLD', 'BOUGHT', "SENT", "RECEIVED"];
         let transdict = {'SOLD': [], 'BOUGHT': [], 'SENT': [], 'RECEIVED': []};
+        let days_list = [7, 30, 60, 90];
+        const event = this;
         if (transaction) {
             transaction['results'].map(function (item) {
                 transdict[item.transaction_type].push(item)
             });
             return (<div className="whiteBox secBox" id="transations">
-                {transaction_day === 7 ?
-                    <div className="actionMain dropdownSlide">
-                        <div className="dropClick paging actionBtn trans">
-                            <span data-days="7" onClick={() => this.transactionClick(7)}>Past 7 days</span>
-                            <img src={"../" + DarkDotImage} alt=""/></div>
-                        <div className="dropdown_box">
-                            <ul>
-                                <li><a data-days="30" className="darkdots" onClick={() => this.transactionClick(30)}
-                                       title="Past 30 days">Past 30 days</a></li>
-                            </ul>
-                        </div>
+                {<div className="actionMain dropdownSlide">
+                    <div className="dropClick paging actionBtn trans">
+                    <span data-days={transaction_day}
+                          onClick={() => this.transactionClick(transaction_day)}>Past {transaction_day} days</span>
+                        <img src={"../" + DarkDotImage} alt=""/></div>
+                    <div className="dropdown_box">
+                        <ul>
+                            {days_list.map(function (item, index) {
+                                if (item !== transaction_day) {
+                                    return (
+                                        <li key={index}>
+                                            <a data-days={item} className="darkdots"
+                                               onClick={() => event.transactionClick(item)}
+                                               title={"Past " + item + " days"}>Past {item} days</a>
+                                        </li>)
+                                }
+                            })}
+                        </ul>
                     </div>
-                    :
-                    <div className="actionMain dropdownSlide">
-                        <div className="dropClick paging actionBtn trans">
-                            <span data-days="30" onClick={() => this.transactionClick(30)}>Past 30 days</span>
-                            <img src={"../" + DarkDotImage} alt=""/></div>
-                        <div className="dropdown_box">
-                            <ul>
-                                <li>
-                                    <a data-days="7" className="darkdots" onClick={() => this.transactionClick(7)}
-                                       title="Past 7 days">Past 7 days</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                }
+                </div>}
                 <div className="secTitleMain">
                     <div className="secTitle">Recent Transactions</div>
                 </div>
                 <ul className="tabList">
+                    <li data-type='ALL' className="tabActive">ALL</li>
                     {types.map(function (type, index) {
-                        return (<li data-type={type} className={index === 0 && "tabActive"}>{type}</li>)
+                        return (<li key={index} data-type={type} className="">{type}</li>)
                     })}
                 </ul>
                 <div className="tabMain">
+                    <div id="ALL" className="tabBody tableRow tabActive">
+                        {transaction['results'].length ?
+                            <table className="tableMain" width="100%">
+                                <tbody>
+                                {transaction['results'].map(function (item, index) {
+                                    return (<tr key={index}>
+                                        <td width="150px" valign="middle"
+                                            className="nameField">{item.created}</td>
+                                        <td width="100px" valign="middle"><span
+                                            className="simbole">{item.currency.code}</span></td>
+                                        <td width="200px" valign="middle"><p>{item.currency.name}</p></td>
+                                        <td width="200px" valign="middle"><p>{item.transaction_type}</p></td>
+                                        <td width="200px" valign="middle"><span
+                                            className="table_price">${item.price.toFixed(2)}</span><span
+                                            className="wasPrice"> {item.amount} {item.currency.code}</span></td>
+                                        <td width="350px" valign="middle"><p>{item.message}</p></td>
+                                    </tr>)
+                                })}
+                                </tbody>
+                            </table>
+                            :
+                            <p className="text-center">No record found</p>
+                        }
+                    </div>
                     {types.map(function (type, index) {
                         return (
                             <div id={type} key={index}
-                                 className={"tabBody tableRow " + (index === 0 ? "tabActive" : '')}>
+                                 className="tabBody tableRow">
                                 {transdict[type].length ?
                                     <table className="tableMain" width="100%">
                                         <tbody>
@@ -100,7 +120,7 @@ export class UserTransactions extends React.Component {
                                                     className="simbole">{item.currency.code}</span></td>
                                                 <td width="200px" valign="middle"><p>{item.currency.name}</p></td>
                                                 <td width="200px" valign="middle"><span
-                                                    className="table_price">${item.price.toLocaleString('en')}</span><span
+                                                    className="table_price">${item.price.toFixed(2)}</span><span
                                                     className="wasPrice"> {item.amount} {item.currency.code}</span></td>
                                                 <td width="350px" valign="middle"><p>{item.message}</p></td>
                                             </tr>)

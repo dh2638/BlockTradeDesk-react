@@ -71,7 +71,7 @@ export class UserCurrency extends React.Component {
                     <div className="secTitleMain">
                         <div className="secTitle">Your Portfolio</div>
                         <div className="subTitle">Total Value:
-                            <strong> ${user_total_amount.toLocaleString('en')}</strong></div>
+                            <strong> ${user_total_amount.toFixed(2)}</strong></div>
                     </div>
                     <ul className="tableRow">
                         {user_currency['results'].map(function (item, index) {
@@ -79,7 +79,7 @@ export class UserCurrency extends React.Component {
                             return (<li key={index}>
                                 <div className="col-1 coinName">{item.name}</div>
                                 <div className="col-2">
-                                    <span className="priceTag"> ${(item.amount * current_rate).toLocaleString('en')}</span>
+                                    <span className="priceTag"> ${(item.amount * current_rate).toFixed(2)}</span>
                                     {item.amount} {item.code}
                                 </div>
                             </li>)

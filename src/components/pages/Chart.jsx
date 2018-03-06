@@ -269,7 +269,7 @@ export class Chart extends React.Component {
                                                 <a className="currency-dropdown darkdots"
                                                    data-type={item.name.toLowerCase()}
                                                    data-code={item.name.toUpperCase()} data-name={item.name}
-                                                   data-value={coins['current']['KRAKEN_SPOT_' + item.code + '_USD'].toLocaleString('en')}
+                                                   data-value={coins['current']['KRAKEN_SPOT_' + item.code + '_USD'].toFixed(2)}
                                                    title="Test">{item.name}</a></li>)
                                         }
                                     })}
@@ -285,7 +285,7 @@ export class Chart extends React.Component {
                                         <li key={index} className={index === 0 ? 'coinTabActive' : ''}
                                             data-coin={item.name.toLowerCase()}>
                                             <span>{item.name} </span>
-                                            ${coins['current']['KRAKEN_SPOT_' + item.code + '_USD'].toLocaleString('en')}
+                                            ${coins['current']['KRAKEN_SPOT_' + item.code + '_USD'].toFixed(2)}
                                         </li>
                                     )
                                 }
@@ -302,11 +302,11 @@ export class Chart extends React.Component {
                                  className={'boxInner coinTabBody' + (index === 0 ? ' coinTabActive' : '')}>
                         <div className="priceBoxes">
                             <div className="priceBox">
-                                <strong>$ {coins['current']['KRAKEN_SPOT_' + item.code + '_USD'].toLocaleString('en')}</strong>
+                                <strong>$ {coins['current']['KRAKEN_SPOT_' + item.code + '_USD'].toFixed(2)}</strong>
                                 <span>{item.name.toUpperCase()} PRICE</span></div>
                             <div className="priceBox downArrow">
                                 <strong>{coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'] ?
-                                    "$ " + coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'].toLocaleString('en') : "Not available"}</strong>
+                                    "$ " + coins['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'].toFixed(2) : "Not available"}</strong>
                                 <span>since last month (USD)</span>
                             </div>
                             <div className={'priceBox' + (amount > 0 ? ' downArrow' : ' upArrow')}>
