@@ -8,7 +8,7 @@ export class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.props.LocalData();
-        this.state['notification'] = undefined
+        this.state['notification'] = undefined;
         this.state['is_new_notification'] = false
     }
 

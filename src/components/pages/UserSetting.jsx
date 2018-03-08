@@ -57,7 +57,7 @@ export class UserSetting extends React.Component {
                                             </div>
                                         )
                                     })}
-                                    <div className="inputMain">
+                                    <div className="cur-pre-div inputMain ">
                                         <input id="cur-pre-btn" className="trans submiteBtn" type="submit"
                                                value="Update"/>
                                     </div>
