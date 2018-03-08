@@ -15,6 +15,10 @@ var Config = {
         all_currencies: '/currency/all/',
         currencies_hour_data: '/currency/hour/data/',
         currency_type: '/currency/all/',
+        currency_preference:'/configuration/currency-preference/',
+        notification_all:'/notification/',
+        notification_unread:'/notification/unread/',
+        notification_set_read:'/notification/mark-as-read/',
         stream_websocket: 'wss://ws.coinapi.io/v1/'
 
     },

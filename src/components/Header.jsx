@@ -1,14 +1,35 @@
 import React from "react";
 import globalImage from "./../static/images/globle.svg";
+import {apiMethods} from "./Common";
+
+let Config = require('./Global');
 
 export class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = this.props.LocalData();
+        this.state['notification'] = undefined
+        this.state['is_new_notification'] = false
     }
 
     updateUserData() {
         this.setState(this.props.LocalData());
+    }
+
+    notification() {
+        const event = this;
+        getNotifications().then(function (data) {
+            event.setState({'notification': data});
+            let new_notification = false;
+            data['results'].map(function (item) {
+                if (item.unread) {
+                    new_notification = true
+                }
+            });
+            if (new_notification) {
+                event.setState({'is_new_notification': true})
+            }
+        })
     }
 
     getShortName() {
@@ -18,11 +39,15 @@ export class Header extends React.Component {
     }
 
     componentWillMount() {
-        this.setState(this.props.LocalData())
+        const {user} = this.state;
+        this.setState(this.props.LocalData());
+        if (user) {
+            this.notification()
+        }
     }
 
     render() {
-        const {user, first_name, last_name} = this.state;
+        const {user, first_name, last_name, notification, is_new_notification} = this.state;
         return [
             <div key="first" className="topHead">
                 <div className="pageTitle"><h1>Blocktrade Desk</h1></div>
@@ -42,13 +67,15 @@ export class Header extends React.Component {
                     </div>
                     <div className="notificationMain dropdownSlide"><span className="dropClick">
                         <img src={globalImage} alt=""/>
-                        <span className="notiDots"/></span>
+                        {is_new_notification && <span className="notiDots"/>}
+                    </span>
                         <div className="dropdown_box">
                             <ul>
-                                <li key="1"><a href="#" title="Test 01">Test 01</a></li>
-                                <li key="2"><a href="#" title="Test 02">Test 02</a></li>
-                                <li key="3"><a href="#" title="Test 03">Test 03</a></li>
-                                <li key="4" className="view_all"><a href="#">View All Notification</a></li>
+                                {notification && notification['results'].map(function (item, index) {
+                                    return (
+                                        <li key={index}><a href="#" data-id={item.id} title={item.verb}>{item.verb}</a>
+                                        </li>)
+                                })}
                             </ul>
                         </div>
                     </div>
@@ -61,7 +88,7 @@ export class Header extends React.Component {
                     <div className="container">
                         <div className="buttonMain pull-right">
                             <a href="#/dashboard/" className="btn active trans" title="Dashboard"> Dashboard</a>
-                            <a href='#' className="btn trans" title="Settings"> Settings</a>
+                            <a href='#/settings/' className="btn trans" title="Settings"> Settings</a>
                         </div>
                     </div>
                 </div>
@@ -69,4 +96,10 @@ export class Header extends React.Component {
             </div>
         ]
     }
+}
+
+function getNotifications() {
+    let API_URL = Config['api']['notification_all'];
+    const requestData = {};
+    return apiMethods.get(API_URL, requestData, true)
 }

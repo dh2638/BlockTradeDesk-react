@@ -1,5 +1,4 @@
 import React from 'react';
-import {history} from "../History";
 import {apiMethods} from "../Common";
 import {Link} from 'react-router-dom'
 
