@@ -10,6 +10,7 @@ export class Header extends React.Component {
         this.state = this.props.LocalData();
         this.state['notification'] = undefined;
         this.state['is_new_notification'] = false
+        this.state['unread_list'] = []
     }
 
     updateUserData() {
@@ -21,11 +22,14 @@ export class Header extends React.Component {
         getNotifications().then(function (data) {
             event.setState({'notification': data});
             let new_notification = false;
+            let unread_list = [];
             data['results'].map(function (item) {
                 if (item.unread) {
-                    new_notification = true
+                    new_notification = true;
+                    unread_list.push(item.id)
                 }
             });
+            event.setState({unread_list: unread_list});
             if (new_notification) {
                 event.setState({'is_new_notification': true})
             }
@@ -46,11 +50,24 @@ export class Header extends React.Component {
         }
     }
 
+    handleNotificationClick(id) {
+        const {unread_list} = this.state;
+        let index = unread_list.indexOf(id);
+        const event = this;
+        if (index > -1) {
+            mask_as_readNotifications(id).then(function (item) {
+                unread_list.splice(index, 1);
+                event.setState({unread_list: unread_list})
+            })
+        }
+    }
+
     render() {
-        const {user, first_name, last_name, notification, is_new_notification} = this.state;
-        return [
+        const {user, first_name, last_name, notification, is_new_notification, unread_list} = this.state;
+        const event = this;
+        return (
             <div key="first" className="topHead">
-                <div className="pageTitle"><h1>Blocktrade Desk</h1></div>
+                <div className="pageTitle"><h1><a className="headline" href="#/"> Blocktrade Desk</a></h1></div>
                 {user &&
                 <div className="pull-right headRight">
                     <div className="profile dropdownSlide">
@@ -69,32 +86,26 @@ export class Header extends React.Component {
                         <img src={globalImage} alt=""/>
                         {is_new_notification && <span className="notiDots"/>}
                     </span>
-                        <div className="dropdown_box">
-                            <ul>
-                                {notification && notification['results'].map(function (item, index) {
-                                    return (
-                                        <li key={index}><a href="#" data-id={item.id} title={item.verb}>{item.verb}</a>
-                                        </li>)
-                                })}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                }
-            </div>,
-            <div key="second" className="clearfix"/>,
-            <div key="third">
-                {user && <div className="subHead">
-                    <div className="container">
-                        <div className="buttonMain pull-right">
-                            <a href="#/dashboard/" className="btn active trans" title="Dashboard"> Dashboard</a>
-                            <a href='#/settings/' className="btn trans" title="Settings"> Settings</a>
-                        </div>
+                        {notification && notification['count'] ?
+                            <div className="dropdown_box">
+                                <ul>
+                                    {notification['results'].map(function (item, index) {
+                                        return (
+                                            <li key={index}>
+                                                <a onClick={() => event.handleNotificationClick(item.id)}
+                                                   className={unread_list.indexOf(item.id) > -1 && item.unread ? "notification" : '' }
+                                                   data-id={item.id} title={item.verb}>{item.verb}</a>
+                                            </li>)
+                                    })}
+                                </ul>
+                            </div> :
+                            <div/>
+                        }
                     </div>
                 </div>
                 }
             </div>
-        ]
+        )
     }
 }
 
@@ -102,4 +113,9 @@ function getNotifications() {
     let API_URL = Config['api']['notification_all'];
     const requestData = {};
     return apiMethods.get(API_URL, requestData, true)
+}
+function mask_as_readNotifications(id) {
+    let API_URL = Config['api']['notification_set_read'];
+    const requestData = JSON.stringify({id});
+    return apiMethods.post(API_URL, requestData, true)
 }

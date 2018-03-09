@@ -128,7 +128,7 @@ opacity:1;
 .subHead{display:block; float:left; width:100%; background:#fff; border-bottom:1px solid #e1e1e1; padding:20px 0;}
 .btn{display:inline-block;width:auto;border:2px solid #49115f;color:#49115f;font-weight:700;text-transform:uppercase;border-radius:14px;padding:6px 20px;margin:0 5px;font-family: 'gotham_boldregular';font-size: 14px;line-height: 24px;}
 .active.btn{background:#49115f; color:#fff;}
-
+.headline{color:#fff;}
 .buttonMain{margin:0 -5px;}
 
 .whiteBox{display:block; float:left; width:100%; background:#fff; margin-top:40px; border:1px solid #e1e1e1;}
@@ -216,3 +216,4 @@ input[type="checkbox"] + label:before { content: ''; display: block; width: 20px
 input[type="checkbox"]:checked + label:before { width: 10px; top: -5px; left: 5px; border-radius: 0; opacity: 1; border-top-color: transparent; border-left-color: transparent; -webkit-transform: rotate(45deg); transform: rotate(45deg); }
 .cur-pre{padding: 10px 0px;}
 .cur-pre-div{ width: 30% !important;}
+.notification{background: #f1f1f1;}

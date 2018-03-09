@@ -16,6 +16,7 @@ export class Chart extends React.Component {
             chart_data: false,
             is_draw: false,
             coins_data: undefined,
+            currency_pref: 0
 
         };
         Highcharts.setOptions({
@@ -26,40 +27,25 @@ export class Chart extends React.Component {
     }
 
     coins_dict() {
-        let coins_data = localStorage.getItem('coins_data');
-        if (coins_data) {
-            coins_data = JSON.parse(coins_data)
-        }
-        else {
-            coins_data = {
-                current: {},
-                last: {},
-                last_date: moment().subtract(30, 'd').utc().format()
-            };
-            const event = this;
-            let data = getcurrencyType().then(function (data) {
-                    data['results'].map(function (item) {
-                        coins_data['current']['KRAKEN_SPOT_' + item.code + '_USD'] = 0;
-                        coins_data['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'] = 0
-                    });
-                }
-            );
-        }
-        this.setState({'coins_data': coins_data});
-        localStorage.setItem('coins_data', JSON.stringify(coins_data));
-    }
-
-    getCoinsRates() {
-        let coins_data = localStorage.getItem('coins_data');
-        if (!coins_data) {
-            coins_data = this.coins_dict();
-        }
-        else {
-            coins_data = JSON.parse(coins_data)
-        }
-        if (coins_data)
-            return coins_data
-
+        let coins_data = {
+            current: {},
+            last: {},
+            last_date: moment().subtract(30, 'd').utc().format()
+        };
+        const event = this;
+        let {currency_pref} = this.state;
+        getcurrencyPreference().then(function (data) {
+                data.map(function (item) {
+                    coins_data['current']['KRAKEN_SPOT_' + item.code + '_USD'] = 0;
+                    coins_data['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'] = 0
+                    if (item.is_select) {
+                        currency_pref ++;
+                    }
+                });
+            event.setState({currency_pref: currency_pref});
+                event.setState({'coins_data': coins_data});
+            }
+        );
     }
 
     getCurrencyAmount(code) {
@@ -172,7 +158,6 @@ export class Chart extends React.Component {
                     }
                 }));
                 const {coins_data} = event.state;
-                localStorage.setItem('coins_data', JSON.stringify(coins_data));
             }
         };
         window.onbeforeunload = function () {
@@ -239,7 +224,6 @@ export class Chart extends React.Component {
                                         }
                                     }));
                                     const {coins_data} = event.state;
-                                    localStorage.setItem('coins_data', JSON.stringify(coins_data));
                                 }
                                 else {
                                     chart_data[item.name] = []
@@ -260,7 +244,7 @@ export class Chart extends React.Component {
     }
 
     render() {
-        const {currencies, coins_data} = this.state;
+        const {currencies, coins_data, currency_pref} = this.state;
         if (coins_data && currencies) {
             return (
                 <div>
@@ -268,7 +252,7 @@ export class Chart extends React.Component {
                         <div className="whiteBoxHead">
                             <div className="pull-right">
                                 <div className="actionMain dropdownSlide">
-                                    {currencies.length > 3 &&
+                                    {currencies.length > currency_pref &&
                                     <div className="dropClick actionBtn trans">
                                         <img src={"../" + DarkDotImage} alt=""/>
                                     </div>
@@ -276,7 +260,7 @@ export class Chart extends React.Component {
                                     <div className="dropdown_box">
                                         <ul>
                                             {currencies && currencies.map(function (item, index) {
-                                                if (index > 2) {
+                                                if (index > currency_pref - 1) {
                                                     return (<li key={index}>
                                                         <a className="currency-dropdown darkdots"
                                                            data-type={item.name.toLowerCase()}
@@ -292,7 +276,7 @@ export class Chart extends React.Component {
                             <div className="coinList">
                                 <ul>
                                     {currencies && currencies.map(function (item, index) {
-                                        if (index < 3) {
+                                        if (index < currency_pref) {
                                             return (
                                                 <li key={index} className={index === 0 ? 'coinTabActive' : ''}
                                                     data-coin={item.name.toLowerCase()}>
@@ -353,3 +337,8 @@ function getcurrencyData(code) {
     return apiMethods.coinapi(API_URL)
 }
 
+function getcurrencyPreference() {
+    let API_URL = Config['api']['currency_preference'];
+    let requestData = {};
+    return apiMethods.get(API_URL, requestData, true)
+}

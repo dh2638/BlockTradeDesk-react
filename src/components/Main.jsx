@@ -16,6 +16,7 @@ import {ForgetPasswordSetPassword} from "./pages/ForgetPasswordSetPassword";
 import {ProfileEdit} from "./pages/ProfileEdit";
 import {PasswordChange} from "./pages/PasswordChange";
 import {UserSetting} from "./pages/UserSetting";
+import {Contact} from "./pages/Contact"
 
 export class Main extends React.Component {
 
@@ -35,6 +36,7 @@ export class Main extends React.Component {
                     <PrivateRoute exact path="/profile/edit/" component={() => (<ProfileEdit setLoginProp={this.props.setUserData} />)}/>
                     <PrivateRoute exact path="/password-change/" component={PasswordChange}/>
                     <PrivateRoute exact path="/settings/" component={UserSetting}/>
+                    <PrivateRoute exact path="/contact/" component={Contact}/>
                     {/*<Route component={NotFound}/>*/}
                 </div>
             </Router>

@@ -2,6 +2,7 @@ import React from "react";
 import {apiMethods} from "../Common";
 
 let Config = require('../Global');
+let {SubHeader} = require('../SubHeader');
 
 
 export class ProfileEdit extends React.Component {
@@ -17,7 +18,8 @@ export class ProfileEdit extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillMount() {
+    componentWillMount(){
+        const {first_name, last_name} = this.state;
         getname().then(
             data => {
                 this.setState({
@@ -56,30 +58,33 @@ export class ProfileEdit extends React.Component {
     render() {
         const {first_name, last_name, submitted} = this.state;
         return (
-            <div className="loginMid">
-                <div className="loginBox">
-                    <div className="loginInner">
-                        <div className="loginTitle">Update Profile</div>
-                        <form onSubmit={this.handleSubmit} method="post">
-                            <div className={'inputMain' + (submitted && !first_name ? ' has-error' : '')}>
-                                <input id="id_first_name" name="first_name" className="inputBox" type="text"
-                                       placeholder="First Name *" value={first_name} onChange={this.handleChange}/>
-                            </div>
-                            {submitted && !first_name && <div className="help-block">First Name is required.</div>}
+            <div>
+                <SubHeader/>
+                <div className="loginMid">
+                    <div className="loginBox">
+                        <div className="loginInner">
+                            <div className="loginTitle">Update Profile</div>
+                            <form onSubmit={this.handleSubmit} method="post">
+                                <div className={'inputMain' + (submitted && !first_name ? ' has-error' : '')}>
+                                    <input id="id_first_name" name="first_name" className="inputBox" type="text"
+                                           placeholder="First Name *" value={first_name} onChange={this.handleChange}/>
+                                </div>
+                                {submitted && !first_name && <div className="help-block">First Name is required.</div>}
 
-                            <div className={'inputMain passwField' + (submitted && !last_name ? ' has-error' : '')}>
-                                <input id="id_last_name" name="last_name" className="inputBox" type="text"
-                                       placeholder="Last Name *" value={last_name} onChange={this.handleChange}/>
-                            </div>
-                            {submitted && !last_name && <div className="help-block">Last Name is required.</div>}
-                            <div className="inputMain">
-                                <input id="loginform-btn" className="trans submiteBtn" type="submit"
-                                       value="Update Profile"/>
-                            </div>
-                            <div className="forgotText">Change Password?
-                                <a href="#/password-change/" className="trans"> Click Here!</a>
-                            </div>
-                        </form>
+                                <div className={'inputMain passwField' + (submitted && !last_name ? ' has-error' : '')}>
+                                    <input id="id_last_name" name="last_name" className="inputBox" type="text"
+                                           placeholder="Last Name *" value={last_name} onChange={this.handleChange}/>
+                                </div>
+                                {submitted && !last_name && <div className="help-block">Last Name is required.</div>}
+                                <div className="inputMain">
+                                    <input id="loginform-btn" className="trans submiteBtn" type="submit"
+                                           value="Update Profile"/>
+                                </div>
+                                <div className="forgotText">Change Password?
+                                    <a href="#/password-change/" className="trans"> Click Here!</a>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

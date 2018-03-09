@@ -19,6 +19,7 @@ var Config = {
         notification_all:'/notification/',
         notification_unread:'/notification/unread/',
         notification_set_read:'/notification/mark-as-read/',
+        contact_submit:'/contact/submit/',
         stream_websocket: 'wss://ws.coinapi.io/v1/'
 
     },

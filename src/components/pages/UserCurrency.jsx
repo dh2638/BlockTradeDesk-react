@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {apiMethods} from "../Common";
 
 let Config = require('../Global');
@@ -12,32 +12,26 @@ export class UserCurrency extends React.Component {
             is_render: false
         };
     }
-    componentWillMount(){
+
+    componentWillMount() {
         this.userCurrencies();
     }
+
     componentWillUpdate() {
         const {user_currency, user_total_amount} = this.state;
         this.CalculateTotal()
     }
-    componentDidUpdate(prevProps, prevState){
-        if(prevState['user_currency'] && prevState['user_total_amount']){
-            this.setState({'is_render':true});
-        }
-    }
+
     getCurrenctRate(code) {
         return this.props.getCurrencyValue(code);
-    }
-
-    shouldComponentUpdate(nextProps, nextState) {
-        return !(nextState['user_currency'] && nextState['user_total_amount'] && nextState['is_render'])
     }
 
     userCurrencies(start_date, end_date) {
         const event = this;
         getUserCurrencies(start_date, end_date).then(
             data => {
-                    this.setState({user_currency: data});
-                    this.CalculateTotal()
+                this.setState({user_currency: data});
+                this.CalculateTotal()
             },
         );
     }
@@ -52,8 +46,8 @@ export class UserCurrency extends React.Component {
                 let amount = item.amount ? item.amount : 0.0;
                 total += amount * current_rate;
             });
-            this.setState((prevState) =>{
-                if(prevState.user_total_amount !== total) {
+            this.setState((prevState) => {
+                if (prevState.user_total_amount !== total) {
                     return {user_total_amount: total}
                 }
             });
