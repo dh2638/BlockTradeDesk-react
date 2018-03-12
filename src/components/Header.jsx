@@ -63,7 +63,7 @@ export class Header extends React.Component {
     }
 
     render() {
-        const {user, first_name, last_name, notification, is_new_notification, unread_list} = this.state;
+        const {user, first_name, last_name, notification, unread_list} = this.state;
         const event = this;
         return (
             <div key="first" className="topHead">
@@ -84,7 +84,7 @@ export class Header extends React.Component {
                     </div>
                     <div className="notificationMain dropdownSlide"><span className="dropClick">
                         <img src={globalImage} alt=""/>
-                        {is_new_notification && <span className="notiDots"/>}
+                        {unread_list.length ? <span className="notiDots"/> : ''}
                     </span>
                         {notification && notification['count'] ?
                             <div className="dropdown_box">
