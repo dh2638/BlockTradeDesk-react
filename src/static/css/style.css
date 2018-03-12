@@ -217,3 +217,4 @@ input[type="checkbox"]:checked + label:before { width: 10px; top: -5px; left: 5p
 .cur-pre{padding: 10px 0px;}
 .cur-pre-div{ width: 30% !important;}
 .notification{background: #f1f1f1;}
+.noti-list{cursor: pointer}

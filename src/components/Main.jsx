@@ -17,6 +17,7 @@ import {ProfileEdit} from "./pages/ProfileEdit";
 import {PasswordChange} from "./pages/PasswordChange";
 import {UserSetting} from "./pages/UserSetting";
 import {Contact} from "./pages/Contact"
+import {UserNotification} from "./pages/UserNotification"
 
 export class Main extends React.Component {
 
@@ -37,6 +38,7 @@ export class Main extends React.Component {
                     <PrivateRoute exact path="/password-change/" component={PasswordChange}/>
                     <PrivateRoute exact path="/settings/" component={UserSetting}/>
                     <PrivateRoute exact path="/contact/" component={Contact}/>
+                    <PrivateRoute exact path="/notifications/" component={UserNotification}/>
                     {/*<Route component={NotFound}/>*/}
                 </div>
             </Router>

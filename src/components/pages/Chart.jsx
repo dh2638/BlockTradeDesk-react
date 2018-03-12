@@ -1,7 +1,9 @@
 import React from "react";
 import {apiMethods} from "../Common";
-import DarkDotImage from "./../../static/images/dark-dots.svg";
+import {utils} from "../UtilMethods";
 import Config from "../Global";
+
+import DarkDotImage from "./../../static/images/dark-dots.svg";
 
 import moment from "moment";
 import Highcharts from "highcharts/highstock";
@@ -265,7 +267,7 @@ export class Chart extends React.Component {
                                                         <a className="currency-dropdown darkdots"
                                                            data-type={item.name.toLowerCase()}
                                                            data-code={item.name.toUpperCase()} data-name={item.name}
-                                                           data-value={coins_data['current']['KRAKEN_SPOT_' + item.code + '_USD'].toFixed(2)}
+                                                           data-value={utils.convertPrice(coins_data['current']['KRAKEN_SPOT_' + item.code + '_USD'])}
                                                            title="Test">{item.name}</a></li>)
                                                 }
                                             })}
@@ -281,7 +283,7 @@ export class Chart extends React.Component {
                                                 <li key={index} className={index === 0 ? 'coinTabActive' : ''}
                                                     data-coin={item.name.toLowerCase()}>
                                                     <span>{item.name} </span>
-                                                    ${coins_data['current']['KRAKEN_SPOT_' + item.code + '_USD'].toFixed(2)}
+                                                    ${utils.convertPrice(coins_data['current']['KRAKEN_SPOT_' + item.code + '_USD'])}
                                                 </li>
                                             )
                                         }
@@ -298,15 +300,15 @@ export class Chart extends React.Component {
                                          className={'boxInner coinTabBody' + (index === 0 ? ' coinTabActive' : '')}>
                                 <div className="priceBoxes">
                                     <div className="priceBox">
-                                        <strong>$ {coins_data['current']['KRAKEN_SPOT_' + item.code + '_USD'].toFixed(2)}</strong>
+                                        <strong>$ {utils.convertPrice(coins_data['current']['KRAKEN_SPOT_' + item.code + '_USD'])}</strong>
                                         <span>{item.name.toUpperCase()} PRICE</span></div>
                                     <div className="priceBox downArrow">
                                         <strong>{coins_data['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'] ?
-                                            "$ " + coins_data['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST'].toFixed(2) : "Not available"}</strong>
+                                            "$ " + utils.convertPrice(coins_data['last']['KRAKEN_SPOT_' + item.code + '_USD_LAST']) : "Not available"}</strong>
                                         <span>since last month (USD)</span>
                                     </div>
                                     <div className={'priceBox' + (amount > 0 ? ' downArrow' : ' upArrow')}>
-                                        <strong>{-amount.toFixed(2)} %</strong> <span>since last month (%)</span></div>
+                                        <strong>{-utils.convertPrice(amount)} %</strong> <span>since last month (%)</span></div>
                                 </div>
                                 <div className="chartMain">
                                     <div id={item.name + "-chart"} className="barChart"/>

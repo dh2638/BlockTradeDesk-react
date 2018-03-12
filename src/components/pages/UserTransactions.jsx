@@ -1,5 +1,8 @@
 import React from "react";
 import {apiMethods} from "../Common";
+import {utils} from "../UtilMethods";
+
+
 import DarkDotImage from "./../../static/images/dark-dots.svg";
 
 let Config = require('../Global');
@@ -96,8 +99,8 @@ export class UserTransactions extends React.Component {
                                         <td width="200px" valign="middle"><p>{item.currency.name}</p></td>
                                         <td width="200px" valign="middle"><p>{item.transaction_type}</p></td>
                                         <td width="200px" valign="middle"><span
-                                            className="table_price">${item.price.toFixed(2)}</span><span
-                                            className="wasPrice"> {item.amount} {item.currency.code}</span></td>
+                                            className="table_price">${utils.convertPrice(item.price)}</span><span
+                                            className="wasPrice"> {utils.convertPrice(item.amount)} {item.currency.code}</span></td>
                                         <td width="350px" valign="middle"><p>{item.message}</p></td>
                                     </tr>)
                                 })}
@@ -122,8 +125,8 @@ export class UserTransactions extends React.Component {
                                                     className="simbole">{item.currency.code}</span></td>
                                                 <td width="200px" valign="middle"><p>{item.currency.name}</p></td>
                                                 <td width="200px" valign="middle"><span
-                                                    className="table_price">${item.price.toFixed(2)}</span><span
-                                                    className="wasPrice"> {item.amount} {item.currency.code}</span></td>
+                                                    className="table_price">${utils.convertPrice(item.price)}</span><span
+                                                    className="wasPrice"> {utils.convertPrice(item.amount)} {item.currency.code}</span></td>
                                                 <td width="350px" valign="middle"><p>{item.message}</p></td>
                                             </tr>)
                                         })}

@@ -9,7 +9,7 @@ export class Header extends React.Component {
         super(props);
         this.state = this.props.LocalData();
         this.state['notification'] = undefined;
-        this.state['is_new_notification'] = false
+        this.state['is_new_notification'] = false;
         this.state['unread_list'] = []
     }
 
@@ -90,13 +90,16 @@ export class Header extends React.Component {
                             <div className="dropdown_box">
                                 <ul>
                                     {notification['results'].map(function (item, index) {
-                                        return (
-                                            <li key={index}>
-                                                <a onClick={() => event.handleNotificationClick(item.id)}
-                                                   className={unread_list.indexOf(item.id) > -1 && item.unread ? "notification" : '' }
-                                                   data-id={item.id} title={item.verb}>{item.verb}</a>
-                                            </li>)
+                                        if (index < 3) {
+                                            return (
+                                                <li key={index}>
+                                                    <a onClick={() => event.handleNotificationClick(item.id)}
+                                                       className={unread_list.indexOf(item.id) > -1 && item.unread ? "notification" : '' }
+                                                       data-id={item.id} title={item.verb}>{item.verb}</a>
+                                                </li>)
+                                        }
                                     })}
+                                    <li className="view_all"><a href="#/notifications/">View All Notification</a></li>
                                 </ul>
                             </div> :
                             <div/>
